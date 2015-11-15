@@ -28,7 +28,7 @@
 *	output: result, output from the ALU
 *	output: PSRwrite, Program Status Register determined by ALU operation 
 */
-module ALU#(parameter ALUOPBITS = 3, REGBITS = 5, WIDTH = 32)(
+module ALU#(parameter ALUOPBITS = 3, REGBITS = 5, WIDTH = 16)(
 	 input reset,
     input [WIDTH-1:0] arg1,
     input [WIDTH-1:0] arg2,
