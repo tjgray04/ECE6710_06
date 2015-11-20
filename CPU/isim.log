@@ -1,0 +1,29 @@
+ISim log file
+Running: C:\Users\Steve Brown\Utah\Fall 2015\ECE 6710\Team Project\GIT\CPU\regfile_tb_isim_beh.exe -intstyle ise -gui -tclbatch isim.cmd -wdb C:/Users/Steve Brown/Utah/Fall 2015/ECE 6710/Team Project/GIT/CPU/regfile_tb_isim_beh.wdb 
+ISim P.20131013 (signature 0x7708f090)
+WARNING: A WEBPACK license was found.
+WARNING: Please use Xilinx License Configuration Manager to check out a full ISim license.
+WARNING: ISim will run in Lite mode. Please refer to the ISim documentation for more information on the differences between the Lite and the Full version.
+This is a Lite version of ISim.
+Time resolution is 1 ps
+# onerror resume
+# wave add /
+# run 1000 ns
+Simulator is doing circuit initialization process.
+Start simulation...
+Finished circuit initialization process.
+ERROR @ time                  285: dSrc is 0000000000000000, should be 0000000011111111. rSrc is 15
+ERROR @ time                  435: dDst is 0000000000000000, should be 0000000011111111. rDst is 15
+# run 1.00us
+Simulation finished.
+Stopped at time : 1095 ns : File "C:/Users/Steve Brown/Utah/Fall 2015/ECE 6710/Team Project/GIT/CPU/regfile_tb.v" Line 108
+# restart
+# run 265.00ns
+Simulator is doing circuit initialization process.
+Start simulation...
+Finished circuit initialization process.
+# run 5.00ns
+# run 5.00ns
+# run 5.00ns
+# run 5.00ns
+ERROR @ time                  285: dSrc is 0000000000000000, should be 0000000011111111. rSrc is 15

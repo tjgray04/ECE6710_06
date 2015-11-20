@@ -3,6 +3,14 @@
 // the processor's hardware modules.
 //
 
+//////////////////////////
+// Processor Sizing
+`define DATAWIDTH 	16 // register size
+`define OPWIDTH 	4
+`define PRSWIDTH 	5
+`define ALUOPWIDTH	5
+`define REGWIDTH	4
+`define IMMSIZE		8
 
 //////////////////////////
 // Conditional Types
@@ -44,7 +52,7 @@
 // Op codes (bits 15-12)
 `define ADDI 	4'b0101
 `define ADDUI 	4'b0110
-`define MULI 	4'b1110
+//`define MULI 	4'b1110
 `define SUBI 	4'b1001
 `define CMPI 	4'b1011
 `define ANDI 	4'b0001
@@ -53,16 +61,16 @@
 `define MOVI 	4'b1101
 `define LUI 	4'b1111
 `define BCOND 	4'b1100
-`define RTYPE	4'b0000
-`define STYPE	4'b1000
-`define OTYPE	4'b0100
+`define RTYPE	4'b0000 // Register type
+`define STYPE	4'b1000 // Shift type
+`define OTYPE	4'b0100 // Other type (load/store/jal/branch...)
 
 //////////////////////////
 // Ext Op codes (bits 7-4)
 // top op code is 4'b0000 == RTYPE
 	`define ADD 	4'b0101
 	`define ADDU 	4'b0110
-	`define MUL 	4'b1110
+	//`define MUL 	4'b1110
 	`define SUB 	4'b1001
 	`define CMP 	4'b1011
 	`define AND 	4'b0001
@@ -70,12 +78,21 @@
 	`define XOR 	4'b0011
 	`define MOV 	4'b1101
 // top op code is 4'b1000 == ShiftTYPE
-	`define SLL 	4'b0001
-	`define SLLI 	4'b1001
-	`define SRL 	4'b0010
-	`define SRLI 	4'b1010
-	`define SRA		4'b0011
-	`define SRAI	4'b1011
+	//`define SLL 	4'b0001
+	//`define SLLI 	4'b1001
+	//`define SRL 	4'b0010
+	//`define SRLI 	4'b1010
+	//`define SRA		4'b0011
+	//`define SRAI	4'b1011
+	`define LSH		4'b0100 // Logical shift (2's compliment)
+	`define LLSHI	4'b0000 // Logical left shift
+	`define LRSHI	4'b0001 // Logical right shift
+	`define ASHU	4'b0110 // Arithmetic shift (2's compliment)
+	`define ALSHUI	4'b0010 // Arithmetic left shift
+	`define ARSHUI	4'b0011 // Arithmetic right shift
+	
+	
+	
 // top op code is 4'b0100 == OtherType
 	`define LOAD 	4'b0000
 	`define STOR 	4'b0100
@@ -84,21 +101,20 @@
 	`define JAL 	4'b1000
 
 //////////////////////////
-// ALO Op codes
+// ALU Op codes
 `define ALUOp_ADD		5'b00101
-`define ALUOp_ADDU	5'b00110
+`define ALUOp_ADDU		5'b00110
 `define ALUOp_SUB		5'b01001
-`define ALUOp_MUL		5'b01110
+//`define ALUOp_MUL		5'b01110
 `define ALUOp_AND		5'b00001
 `define ALUOp_OR		5'b00010
-`define ALUOp_XOR		5'b00011
-`define ALUOp_MOV		5'b01101
-`define ALUOp_LUI		5'b01111
-`define ALUOp_SLL		5'b10100
-`define ALUOp_SRL		5'b10001
-`define ALUOp_SRA		5'b10011
-
-
+`define ALUOp_XOR		5'b00011 
+`define ALUOp_MOV		5'b01101 // move
+`define ALUOp_LUI		5'b01111 // load upper immediate
+`define ALUOp_SLL		5'b10100 // shift left logical
+`define ALUOp_SRL		5'b10001 // shift right logical
+`define ALUOp_SLA		5'b10010 // shift left arithmetic
+`define ALUOp_SRA		5'b10011 // shift right arithmetic
 
 //////////////////////////
 // Datapath configurations {regWrite, memWrite, memRead, muxA, muxB, muxWB}
@@ -106,9 +122,9 @@
 `define DP_BCOND	7'b0_0_0_1_1_11
 `define DP_RTYPE	7'b1_0_0_0_0_11
 `define DP_CMP		7'b0_0_0_0_0_11
-`define DP_CMPI		7'b0_0_0_0_1_11
-`define DP_LOAD		7'b1_0_1_0_0_10
-`define DP_STOR		7'b0_1_0_0_0_10
+`define DP_CMPI	7'b0_0_0_0_1_11
+`define DP_LOAD	7'b1_0_1_0_0_10
+`define DP_STOR	7'b0_1_0_0_0_10
 `define DP_SCOND	7'b1_0_0_0_0_01
 `define DP_JCOND	7'b0_0_0_0_0_01
 `define DP_JAL		7'b1_0_0_0_0_00
@@ -154,7 +170,7 @@
 // `define VSP 605
 
 // PSRAM configuration word
-`define psram_config_word 23'b000_10_00_0_1_011_1_0_0_0_0_01_1_111
+//`define psram_config_word 23'b000_10_00_0_1_011_1_0_0_0_0_01_1_111
 
 // FSM state codes (not forcing)
 `define init_state 0
