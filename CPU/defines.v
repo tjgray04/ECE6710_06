@@ -6,10 +6,10 @@
 //////////////////////////
 // Processor Sizing
 `define DATAWIDTH 	16 // register size
-`define OPWIDTH 	4
-`define PRSWIDTH 	5
+`define OPWIDTH 		4
+`define PRSWIDTH 		5
 `define ALUOPWIDTH	5
-`define REGWIDTH	4
+`define REGWIDTH		4
 `define IMMSIZE		8
 
 //////////////////////////

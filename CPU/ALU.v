@@ -42,6 +42,6 @@ module alu
 			`ALUOp_LUI:		temp = {rSrc[`IMMSIZE-1:0], rDst[`IMMSIZE-1:0]};
 			`ALUOp_MOV:		temp = rSrc;
 			 default:		temp = 0;
-		  endcase
+		endcase
 
 endmodule

@@ -37,7 +37,7 @@ module regfile_tb;
 	wire [15:0] dDst;
 
 	// Integer
-	integer i;
+	integer i,j;
 	
 	// Instantiate the Unit Under Test (UUT)
 	regfile uut (
@@ -53,62 +53,61 @@ module regfile_tb;
 
 	initial begin
 		// Initialize Inputs
-		clk = 0;
+		clk = 1;
 		write = 0;
-		rSrc = 0;
-		rDst = 0;
-		pc = 0;
-		write_data = 16'hff;
+		rSrc = 4'b0;
+		rDst = 4'b0;
+		pc = 16'h0;
+		write_data = 16'h0;
 
 		$display("Start simulation...");
 		
 		// Wait 100 ns for global reset to finish
-		#95;
-		
-      // Write into regfile first
-		#10 write = 1;
-		for(i = 0; i < 2**4; i = i + 1) begin
-			#10
-			rDst = i; 
-		end
-		
-		// Read from regfile
-		#20 write = 0;
-		for(i = 0; i < 2**4; i = i + 1) begin
+		#100;
+		for(j = 0; j < 16; j = j + 1)begin
 			#10;
-			rDst = i; 
-			rSrc = ~i;
-			if(dDst != write_data) $display("ERROR @ time %d: dDst is %b, should be %b. rDst is %d", $time, dDst, write_data, rDst);
-			if(dSrc != write_data) $display("ERROR @ time %d: dSrc is %b, should be %b. rSrc is %d", $time, dSrc, write_data, rSrc);
-		end
-		
-		// Write into regfile
-		#10 write = 1;
-		write_data = 0;
-		for(i = 0; i < 2**4; i = i + 1) begin
-			#20;
-			rDst = i; 
-		end
-		
-		// reset registers
-		rDst = 0;
-		rSrc = 0;
-		
-		// Read from regfile
-		#10 write = 0; 
-		for(i = 0; i < 2**4; i = i + 1) begin
-			rDst = i; 
-			rSrc = ~i;
-			#20;
-			if(dDst != write_data) $display("ERROR @ time %d: dDst is %b, should be %b. rDst is %d", $time, dDst, write_data, rDst);
-			if(dSrc != write_data) $display("ERROR @ time %d: dSrc is %b, should be %b. rSrc is %d", $time, dSrc, write_data, rSrc);
-		end
-		
+			write_data = j;
+			pc = ~j;
+			write = 1;
+			
+			// Initialize all the registers to zero
+			for(i = 0; i < 16; i = i + 1) begin
+				#10;
+				rDst = i;
+			end
+			
+			// Now read from all the registers and make sure they are zero
+			#10;
+			write = 0;
+			#50;
+			for(i = 0; i < 16; i = i + 1) begin
+				#10;
+				rDst = i;
+				rSrc = ~i;
+				#10;
+				// Check dDst
+				if(rDst == 0)
+					if(dDst != 0) $display("ERR0R @ time %d: dDst = %b, should be %b. rDst = %b.", $time, dDst, 0, rDst);
+				else if(rDst == 15)
+					if(dDst != pc) $display("ERR0R @ time %d: dDst = %b, should be %b. rDst = %b.", $time, dDst, pc, rDst);
+				else
+					if(dDst != write_data) $display("ERR0R @ time %d: dDst = %b, should be %b. rDst = %b.", $time, dDst, write_data, rDst);
+				
+				// Check dSrc
+				if(rSrc == 0)
+					if(dSrc != 0) $display("ERR0R @ time %d: dSrc = %b, should be %b. rSrc = %b.", $time, dSrc, 0, rSrc);
+				else if(rSrc == 15)
+					if(dSrc != pc) $display("ERR0R @ time %d: dSrc = %b, should be %b. rSrc = %b.", $time, dSrc, pc, rSrc);
+				else
+					if(dSrc != write_data) $display("ERR0R @ time %d: dSrc = %b, should be %b. rSrc = %b.", $time, dSrc, write_data, rSrc);
+			end // k
+		end // j
+					
 		$display("Simulation finished.");
 		$finish(2);
 	end
       
 	always #5 clk = ~clk;
-		
+
 endmodule
 

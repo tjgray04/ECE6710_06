@@ -8,7 +8,7 @@
 module regfile
 	 (input  clk,
 	  //input 	pulse_en,
-	  input  write, 									// signal to write ddest to rdest
+	  input  write, 									// signal to write dDst to rDst
 	  input  [`REGWIDTH-1:0] rSrc, rDst, 		// src and dst register locations
 	  input  [`DATAWIDTH-1:0] pc,					// program counter
 	  input  [`DATAWIDTH-1:0] write_data, 		// write back data
@@ -17,12 +17,13 @@ module regfile
 	reg  [`DATAWIDTH-1:0] reg_block [2**`REGWIDTH-1:0];
 
 	// no use in clearing the registers
-	always @(posedge clk)
-      //if (pulse_en && write) mem_block[rdest] <= write_data;
-		if (write) reg_block[rDst] <= write_data;
+	always @(negedge clk)
+      // r15 is the return address register ra
+		if (write) reg_block[rDst] <= (&rDst) ? pc : write_data;
+		// note: Let rSrc = 4'b1111, &rSrc is equivalent to 1 & 1 & 1 & 1. Results in 1'b1
 	
-	// pc is read only at register address 15 (r15 is the return address register ra)
-	assign dSrc = &rSrc ? pc : reg_block[rSrc]; // note: Let rSrc = 4’b1111, &rSrc is equivalent to 1 & 1 & 1 & 1. Results in 1'b1
-	assign dDst = &rDst ? pc : reg_block[rDst];
+	// r0 is a zero register with constant value 0 
+	assign dSrc = (rSrc) ? reg_block[rSrc] : 16'b0;
+	assign dDst = (rDst) ? reg_block[rDst] : 16'b0;
 
 endmodule
