@@ -19,8 +19,8 @@ module alu
 	wire signed [`DATAWIDTH-1:0] dstSigned = rDst;
 
 	assign psrOut[`psrZ] = rSrc == rDst;
-	assign psrOut[`psrL] = rDst < rSrc;
-	assign psrOut[`psrN] = dstSigned < srcSigned;
+	assign psrOut[`psrL] = rDst < rSrc; // compare unsigned
+	assign psrOut[`psrN] = dstSigned < srcSigned; // compare signed
 	assign psrOut[`psrF] = (srcSigned < 0 && dstSigned < 0 && result > 0) || (srcSigned > 0 && dstSigned > 0 && result < 0);
 	assign psrOut[`psrC] = temp[`DATAWIDTH];
 	assign result = temp[`DATAWIDTH-1:0];
