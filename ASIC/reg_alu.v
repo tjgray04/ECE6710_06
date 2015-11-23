@@ -23,7 +23,7 @@ module reg_alu
 	wire [`DATAWIDTH-1:0] alu_Result; 			// result from the alu
 	wire  [`DATAWIDTH-1:0] regInBus; 				// input to reg file data in port
 	
-	alu _alu(.rSrc(alu_rSrc), .rDst(dDst), .opCode(aluOp), .psrOut(psrOut), .result(alu_Result));
+	alu _alu(.dSrc(alu_rSrc), .dDst(dDst), .opCode(aluOp), .psrOut(psrOut), .result(alu_Result));
 	
 	regfile _regfile(.clk(clk), .write(write), .rSrc(rSrc), .rDst(rDst), .pc(pc), .write_data(regInBus), .dSrc(dSrc), .dDst(dDst));
 

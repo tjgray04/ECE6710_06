@@ -1861,9 +1861,9 @@ LAB39:    t19 = *((unsigned int *)t10);
 }
 
 
-extern void work_m_00000000002379738482_2725559894_init()
+extern void work_m_00000000004110266646_2725559894_init()
 {
 	static char *pe[] = {(void *)NetDecl_18_0,(void *)NetDecl_19_1,(void *)Cont_21_2,(void *)Cont_22_3,(void *)Cont_23_4,(void *)Cont_24_5,(void *)Cont_25_6,(void *)Cont_26_7,(void *)Always_29_8};
-	xsi_register_didat("work_m_00000000002379738482_2725559894", "isim/reg_alu_tb_isim_beh.exe.sim/work/m_00000000002379738482_2725559894.didat");
+	xsi_register_didat("work_m_00000000004110266646_2725559894", "isim/reg_alu_tb_isim_beh.exe.sim/work/m_00000000004110266646_2725559894.didat");
 	xsi_register_executes(pe);
 }

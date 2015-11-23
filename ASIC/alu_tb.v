@@ -27,8 +27,8 @@
 module alu_tb;
 
 	// Inputs
-	reg [`DATAWIDTH-1:0] rSrc;
-	reg [`DATAWIDTH-1:0] rDst;
+	reg [`DATAWIDTH-1:0] dSrc;
+	reg [`DATAWIDTH-1:0] dDst;
 	reg [`ALUOPWIDTH-1:0] opCode;
 
 	// Outputs
@@ -40,8 +40,8 @@ module alu_tb;
 	
 	// Instantiate the Unit Under Test (UUT)
 	alu uut (
-		.rSrc(rSrc), 
-		.rDst(rDst), 
+		.dSrc(dSrc), 
+		.dDst(dDst), 
 		.opCode(opCode), 
 		.psrOut(psrOut), 
 		.result(result)
@@ -49,8 +49,8 @@ module alu_tb;
 
 	initial begin
 		// Initialize Inputs
-		rSrc = 0;
-		rDst = 0;
+		dSrc = 0;
+		dDst = 0;
 		opCode = 0;
 
 		// Wait 100 ns for global reset to finish
@@ -62,23 +62,23 @@ module alu_tb;
 		for(i = 0; i < 2**`DATAWIDTH; i = i + 1) begin
 			for(j = 2**`DATAWIDTH-1; j >= 0; j = j - 1) begin
 				for(k = 0; k < 2**`ALUOPWIDTH; k = k + 1) begin
-					rDst = i[`DATAWIDTH-1:0];
-					rSrc = j[`DATAWIDTH-1:0];
+					dDst = i[`DATAWIDTH-1:0];
+					dSrc = j[`DATAWIDTH-1:0];
 					opCode = k[`ALUOPWIDTH-1:0];
 					#10;
 					case(opCode)
-						`ALUOp_ADD: 	if(result != ($signed(rDst) + $signed(rSrc))) $display("ERROR: On ADD at time %d. Result = %d, should be %d", $time, result, ($signed(rDst) + $signed(rSrc)));
-						`ALUOp_ADDU: 	if(result != (rDst + rSrc)) $display("ERROR: On ADDU at time %d. Result = %d, should be %d", $time, result, (rDst + rSrc));
-						`ALUOp_SUB:		if(result != ($signed(rDst) - $signed(rSrc))) $display("ERROR: On SUB at time %d. Result = %d, should be %d", $time, result, ($signed(rDst) - $signed(rSrc)));
-						`ALUOp_AND: 	if(result != (rDst & rSrc)) $display("ERROR: On AND at time %d. Result = %b, should be %b. rDst = %b and rSrc = %b", $time, result, (rDst & rSrc),rDst,rSrc);
-						`ALUOp_OR: 		if(result != (rDst | rSrc)) $display("ERROR: On OR at time %d. Result = %b, should be %b. rDst = %b and rSrc = %b", $time, result, (rDst | rSrc),rDst,rSrc);
-						`ALUOp_XOR: 	if(result != (rDst ^ rSrc)) $display("ERROR: On XOR at time %d. Result = %b, should be %b. rDst = %b and rSrc = %b", $time, result, (rDst ^ rSrc),rDst,rSrc);
-						`ALUOp_SLL:		if(result != (rDst << rSrc[`REGWIDTH-1:0])) $display("ERROR: On SLL at time %d. Result = %d, should be %d", $time, result, (rDst << rSrc[`REGWIDTH-1:0]));
-						`ALUOp_SRL:		if(result != (rDst >> rSrc[`REGWIDTH-1:0])) $display("ERROR: On SRL at time %d. Result = %d, should be %d", $time, result, (rDst >> rSrc[`REGWIDTH-1:0]));
-						`ALUOp_SLA:		if(result != (rDst <<< rSrc[`REGWIDTH-1:0])) $display("ERROR: On SLA at time %d. Result = %d, should be %d", $time, result, (rDst <<< rSrc[`REGWIDTH-1:0]));
-						`ALUOp_SRA:		if(result != (rDst >>> rSrc[`REGWIDTH-1:0])) $display("ERROR: On SRA at time %d. Result = %d, should be %d", $time, result, (rDst >>> rSrc[`REGWIDTH-1:0]));
-						`ALUOp_LUI:		if(result != {rSrc[`IMMSIZE-1:0], rDst[`IMMSIZE-1:0]}) $display("ERROR: On LUI at time %d. Result = %d, should be %d", $time, result, ({rSrc[`IMMSIZE-1:0], rDst[`IMMSIZE-1:0]}));
-						`ALUOp_MOV:		if(result != rSrc) $display("ERROR: On MOV at time %d. Result = %d, should be %d", $time, result, rSrc);
+						`ALUOp_ADD: 	if(result != ($signed(dDst) + $signed(dSrc))) $display("ERROR: On ADD at time %d. Result = %d, should be %d", $time, result, ($signed(dDst) + $signed(dSrc)));
+						`ALUOp_ADDU: 	if(result != (dDst + dSrc)) $display("ERROR: On ADDU at time %d. Result = %d, should be %d", $time, result, (dDst + dSrc));
+						`ALUOp_SUB:		if(result != ($signed(dDst) - $signed(dSrc))) $display("ERROR: On SUB at time %d. Result = %d, should be %d", $time, result, ($signed(dDst) - $signed(dSrc)));
+						`ALUOp_AND: 	if(result != (dDst & dSrc)) $display("ERROR: On AND at time %d. Result = %b, should be %b. dDst = %b and dSrc = %b", $time, result, (dDst & dSrc),dDst,dSrc);
+						`ALUOp_OR: 		if(result != (dDst | dSrc)) $display("ERROR: On OR at time %d. Result = %b, should be %b. dDst = %b and dSrc = %b", $time, result, (dDst | dSrc),dDst,dSrc);
+						`ALUOp_XOR: 	if(result != (dDst ^ dSrc)) $display("ERROR: On XOR at time %d. Result = %b, should be %b. dDst = %b and dSrc = %b", $time, result, (dDst ^ dSrc),dDst,dSrc);
+						`ALUOp_SLL:		if(result != (dDst << dSrc[`REGWIDTH-1:0])) $display("ERROR: On SLL at time %d. Result = %d, should be %d", $time, result, (dDst << dSrc[`REGWIDTH-1:0]));
+						`ALUOp_SRL:		if(result != (dDst >> dSrc[`REGWIDTH-1:0])) $display("ERROR: On SRL at time %d. Result = %d, should be %d", $time, result, (dDst >> dSrc[`REGWIDTH-1:0]));
+						`ALUOp_SLA:		if(result != (dDst <<< dSrc[`REGWIDTH-1:0])) $display("ERROR: On SLA at time %d. Result = %d, should be %d", $time, result, (dDst <<< dSrc[`REGWIDTH-1:0]));
+						`ALUOp_SRA:		if(result != (dDst >>> dSrc[`REGWIDTH-1:0])) $display("ERROR: On SRA at time %d. Result = %d, should be %d", $time, result, (dDst >>> dSrc[`REGWIDTH-1:0]));
+						`ALUOp_LUI:		if(result != {dSrc[`IMMWIDTH-1:0], dDst[`IMMWIDTH-1:0]}) $display("ERROR: On LUI at time %d. Result = %d, should be %d", $time, result, ({dSrc[`IMMWIDTH-1:0], dDst[`IMMWIDTH-1:0]}));
+						`ALUOp_MOV:		if(result != dSrc) $display("ERROR: On MOV at time %d. Result = %d, should be %d", $time, result, dSrc);
 						 default:		if(result != 0) $display("ERROR: On default at time %d. Result = %d, should be %d", $time, result, 0);
 					endcase
 				end // k

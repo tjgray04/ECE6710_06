@@ -44,7 +44,7 @@ module reg_alu_tb;
 	wire [15:0] dDst;
 	wire [4:0]  psrOut;
 
-	// Reset
+	// Reset 
 	reg rst;
 	
 	// FSM parameters
@@ -106,101 +106,120 @@ module reg_alu_tb;
 		
 		$display("BEGINNING SIMULATION...");
 		// Wait 100 ns for global reset to finish
-		#105;
-      rst = 0;  
+		#90;
+      rst = 0;
+		#5;
 		// Add stimulus here
 		// The purpose of this testbench is to test various functionality of the regfile and alu connection
 		// An exaustive test is impractical, so a simple FSM was designed to run through various possibilities
 		// of the data path. 
 		for(i = 0; i < 16; i = i + 1) begin
-			#10; //ps = s1
-			case(ps) // Note, checks are from previous state 
-				s10: begin //s10: begin // ARSHUI r4, 15
-						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s0, dSrc, ___);
-						if(dDst != 16'hffff) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s0, dDst, 16'hffff);
-						if(psrOut != 5'b10000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s0, psrOut, 5'b10000);
-					 end
+			#2;
+			case(ps)
 				s0: begin //s0: begin // ANDI r1, 0
-						//if(dSrc != 16'd0) 		$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s1, dSrc, ___);
-						if(dDst != 16'd0) 		$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s1, dDst, 16'd0);
-						//if(psrOut != 5'b00000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s1, psrOut, ___);
+						//if(psrOut != 5'b00000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s0, psrOut, ___);
+						#5;
+						//if(dSrc != 16'd0) 		$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s0, dSrc, ___);
+						if(dDst != 16'd0) 		$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s0, dDst, 16'd0);
 					 end 
 				s1: begin //s1: begin // MOV r2, r0
-						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s2, dSrc, ___);
-						if(dDst != 16'd0) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s2, dDst, 16'd0);
-						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s2, psrOut, ___);
+						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s1, psrOut, ___);
+						#5;
+						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s1, dSrc, ___);
+						if(dDst != 16'd0) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s1, dDst, 16'd0);
 					 end 
 				s2: begin //s2: begin // ADDI r1, 10
-						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s3, dSrc, ___);
-						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s3, dDst, 16'd10);
-						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s3, psrOut, 5'b10010);
+						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s2, psrOut, 5'b10010);
+						#5;
+						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s2, dSrc, ___);
+						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s2, dDst, 16'd10);
 					 end 
 				s3: begin //s3: begin // LUI r2, 255
-						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s4, dSrc, ___);
-						if(dDst != ({8'd255,8'b0})) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s4, dDst, ({8'd255,8'b0}));
-						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s4, psrOut, 5'b10010);
+						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s3, psrOut, 5'b10010);
+						#5;
+						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s3, dSrc, ___);
+						if(dDst != ({8'd255,8'b0})) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s3, dDst, ({8'd255,8'b0}));
 					 end 
 				s4: begin //s4: begin  // STOR r1, r2 -- r1 = datain, r2 = addr 
-						if(dSrc != ({8'd255,8'b0})) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s5, dSrc, ({8'd255,8'b0}));
-						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s5, dDst, 16'd10);
-						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s5, psrOut, 5'b10010);
+						if(psrOut != 5'b00010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s4, psrOut, 5'b10010);
+						#5;
+						if(dSrc != ({8'd255,8'b0})) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s4, dSrc, ({8'd255,8'b0}));
+						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s4, dDst, 16'd10);
 					 end 
-				s5: begin //s5: begin // LOAD r3, r2 -- r3 = memdata, r2 = addr
+				s5: begin //s1: begin // MOV r3, r0
+						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s5, psrOut, ___);
+						#5;
+						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s5, dSrc, ___);
+						if(dDst != 16'd0) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s5, dDst, 16'd0);
+					 end 
+				s6: begin //s5: begin // LOAD r3, r2 -- r3 = memdata, r2 = addr
+						if(psrOut != 5'b00010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s6, psrOut, 5'b00010);
+						#5;
 						if(dSrc != ({8'd255,8'b0})) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s6, dSrc, ({8'd255,8'b0}));
 						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s6, dDst, 16'd10);
-						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s6, psrOut, 5'b10010);
 					 end 
-				s6: begin //s6: begin // CMP r1, r3
+				s7: begin //s6: begin // CMP r1, r3
+						if(psrOut != 5'b01000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s7, psrOut, 5'b01000);
+						#5;
 						if(dSrc != 16'd10) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s7, dSrc, 16'd10);
 						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s7, dDst, 16'd10);
-						if(psrOut != 5'b01000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s7, psrOut, 5'b01000);
 					 end 
-				s7: begin //s7: begin // Bcond - check flags
+				s8: begin //s7: begin // Bcond - check flags
+						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s8, psrOut, ___);
+						#5;
 						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s8, dSrc, ___);
 						//if(dDst != 16'd) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s8, dDst, ___);
-						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s8, psrOut, ___);
 					 end 
-				s10: begin //s8: begin // MOVI r4, 1
+				s9: begin //s8: begin // MOVI r4, 1
+						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s9, psrOut, ___);
+						#5;
 						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s9, dSrc, ___);
 						if(dDst != 16'd1) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s9, dDst, 16'd1);
-						//if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s9, psrOut, ___);
 					 end 
-				s0: begin //s9: begin // LLSHI r4, 15
+				s10: begin //s9: begin // LLSHI r4, 15
+						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s10, psrOut, 5'b10010);
+						#5;
 						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s10, dSrc, ___);
 						if(dDst != 16'h8000) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s10, dDst, 16'h8000);
-						if(psrOut != 5'b10000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s10, psrOut, 5'b10000);
 					 end
-//				s11: begin
-//						if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s11, dSrc, ___);
-//						if(dDst != 16'd) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s11, dDst, ___);
-//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s11, psrOut, ___);
-//					 end
+				s11: begin //s10: begin // ARSHUI r4, 15
+						if(psrOut != 5'b10000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s11, psrOut, 5'b10001);
+						#5;
+						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s11, dSrc, ___);
+						if(dDst != 16'hffff) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s11, dDst, 16'hffff);
+					 end
 //				s12: begin
+//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s12, psrOut, ___);
+//						#5;
 //						if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s12, dSrc, ___);
 //						if(dDst != 16'd) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s12, dDst, ___);
-//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s12, psrOut, ___);
 //					 end
 //				s13: begin
+//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s13, psrOut, ___);
+//						#5;
 //						if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s13, dSrc, ___);
 //						if(dDst != 16'd) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s13, dDst, ___);
-//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s13, psrOut, ___);
 //					 end
-//				s14: begin
+//				s14: begin	
+//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s14, psrOut, ___);
+//						#5;
 //						if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s14, dSrc, ___);
 //						if(dDst != 16'd) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s14, dDst, ___);
-//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s14, psrOut, ___);
 //					 end
 //				s15: begin
+//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s15, psrOut, ___);
+//						#5;
 //						if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s15, dSrc, ___);
 //						if(dDst != 16'd) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s15, dDst, ___);
-//						if(psrOut != 5'b) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s15, psrOut, ___);
 //					 end
 				default: begin
+								if(psrOut != 5'b01000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s10, psrOut, 5'b01000);
+								#5;
 								if(dSrc != 16'd0) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s10, dSrc, 16'd0);
 								if(dDst != 16'd0) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s10, dDst, 16'd0);
-								if(psrOut != 5'b01000) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s10, psrOut, 5'b01000);
 							end
 			endcase
+			#3; // Wait an additional 5 clock ticks
 		end
 		
 		// Close simulation
@@ -285,51 +304,47 @@ module reg_alu_tb;
 					rSrc = 4'd2; 	
 					rDst = 4'd1; 	
 				end	
-			s5: begin // LOAD r3, r2 -- r3 = memdata, r2 = addr 
+			s5: begin // MOV r3, r0
+					write = 1'b1;
+					rSrc = 4'b0;
+					rDst = 4'd3;
+					aluOp = `ALUOp_MOV;
+				end	
+			s6: begin // LOAD r3, r2 -- r3 = memdata, r2 = addr 
 					write = 1'b1; 	
 					rSrc = 4'd2; 	
 					rDst = 4'd3; 
 					SRAM_OUT = 1'b1;
 					mem_data = 16'd10;
 				end	
-			s6: begin // CMP r1, r3
+			s7: begin // CMP r1, r3
 					rSrc = 4'd3; 	
 					rDst = 4'b1; 	 	
 				end	
-			s7: begin // Bcond - check flags
+			s8: begin // Bcond - check flags
 					//Check PSR
 				end	
-			s8: begin // MOVI r4, 1
+			s9: begin // MOVI r4, 1
 					write = 1'b1; 	
 					IMM_MUX = 1'b1;	
 					rDst = 4'd4; 	
 					aluOp = `ALUOp_MOV; 		
 					imm = 16'b1;
 				end	
-			s9: begin // LLSHI r4, 15
+			s10: begin // LLSHI r4, 15
 					write = 1'b1; 	
 					IMM_MUX = 1'b1;	
 					rDst = 4'd4; 	
 					aluOp = `ALUOp_SLL; 		
 					imm = 16'hf;
 				end	
-			s10: begin // ARSHUI r4, 15
+			s11: begin // ARSHUI r4, 15
 					write = 1'b1; 	
 					IMM_MUX = 1'b1;
 					rDst = 4'd4; 	
 					aluOp = `ALUOp_SRA; 		
 					imm = 16'hf;
-				end	
-//			s11: begin // 
-//					write = 1'b0; 	
-//					IMM_MUX = 1'b0;
-//					rSrc = 4'b0; 	
-//					rDst = 4'b0; 	
-//					aluOp = 5'b0; 	
-//					pc = 16'b0; 	
-//					imm = 16'b0;
-//					mem_data = 16'b0;
-//				end	
+				end		
 //			s12: begin
 //					write = 1'b0; 	
 //					IMM_MUX = 1'b0;
