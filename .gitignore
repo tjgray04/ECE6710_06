@@ -3,8 +3,10 @@
 *.bgn
 *.bit
 *.bld
+*.cmd
 *.cmd_log
 *.drc
+*.ini
 *.ll
 *.lso
 *.msd
@@ -26,6 +28,8 @@
 *.twx
 *.unroutes
 *.ut
+*.wdb
+*.xmsgs
 *.xpi
 *.xst
 *_bitgen.xwbt
