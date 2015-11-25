@@ -22,21 +22,22 @@
 `include "defines.v"
 
 module pc
-	(input clk, rst, branch, jump, ra_buf, pcEn,
+	(input clk, rst, branch, jump, pcEn,
 	 input [`IMMWIDTH-1:0] disp,
 	 input [`DATAWIDTH-1:0] dSrc,
+	 output reg [`DATAWIDTH-1:0] pc1,
 	 output reg [`DATAWIDTH-1:0] pc);
 
-	wire signed [`DATAWIDTH-1:0] bmux_out, pc1, pc_next;
+	wire signed [`DATAWIDTH-1:0] bmux_out, pc_next;
 	
 	always@(posedge clk, negedge rst) begin
 		if(!rst)
 			pc <= 0;
-		else
+		else if(pcEn)
 			pc <= pc_next;
 	end
 
-	// Sign extend the displacement if branching
+	// Sign extend the displacement if branching => 8-bit branch [-127,127]
 	assign bmux_out = (branch) ? {{8{disp[`IMMWIDTH-1]}},disp} : 16'd1;
 	
 	// Add the dispalcement

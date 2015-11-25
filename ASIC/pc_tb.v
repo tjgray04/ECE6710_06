@@ -31,12 +31,12 @@ module pc_tb;
 	reg rst;
 	reg branch;
 	reg jump;
-	reg ra_buf;
 	reg pcEn;
 	reg [7:0] disp;
 	reg [15:0] dSrc;
 
 	// Outputs
+	wire [15:0] pc1;
 	wire [15:0] pc;
 	
 	// FSM parameters
@@ -69,10 +69,10 @@ module pc_tb;
 		.rst(rst), 
 		.branch(branch), 
 		.jump(jump), 
-		.ra_buf(ra_buf), 
 		.pcEn(pcEn), 
 		.disp(disp), 
 		.dSrc(dSrc), 
+		.pc1(pc1),
 		.pc(pc)
 	);
 
@@ -82,7 +82,6 @@ module pc_tb;
 		rst = 0;
 		branch = 0;
 		jump = 0;
-		ra_buf = 0;
 		pcEn = 0;
 		disp = 0;
 		dSrc = 0;
@@ -98,39 +97,90 @@ module pc_tb;
 			#5;
 			case(ps)
 				s0: // increment by 1
-					if(pc != 16'h0001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h0001);
+					begin
+						if(pc != 16'h0001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h0001);
+						if(pc1 != 16'h0001) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0001);
+					end
 				s1: //branch by +128
-					if(pc != 16'd129) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'd129);
+					begin
+						if(pc != 16'd129) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'd129);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s2: //branch by -128
-					if(pc != 16'h0001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h0001);
+					begin
+						if(pc != 16'h0001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h0001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s3: // jump to 0
-					if(pc != 16'h0000) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h0000);
+					begin
+						if(pc != 16'h0000) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h0000);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s4: // jump to 0x8000
-					if(pc != 16'h8000) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8000);
+					begin
+						if(pc != 16'h8000) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8000);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s5: // disable pcEn
-					if(pc != 16'h8000) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8000);
+					begin
+						if(pc != 16'h8000) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8000);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s6: // jal to 0xffff 
-					if(pc != 16'hffff) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'hffff);
+					begin
+						if(pc != 16'hffff) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'hffff);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s7: // jump to ra
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s8:
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s9: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s10: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s11: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s12: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s13: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s14: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				s15: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 				default: 
-					if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+					begin
+						if(pc != 16'h8001) $display("ERROR @ time %d in state %d: pc = %h, but should be %h.", $time, ps, pc, 16'h8001);
+						if(pc1 != 16'd2) $display("ERROR @ time %d in state %d: pc1 = %h, but should be %h.", $time, ps, pc1, 16'h0002);
+					end
 			endcase
 			#5;
 		end
@@ -177,7 +227,6 @@ module pc_tb;
 		//rst = 1;
 		branch = 0;
 		jump = 0;
-		ra_buf = 0;
 		pcEn = 0;
 		disp = 0;
 		dSrc = 0;
