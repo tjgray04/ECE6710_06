@@ -32,9 +32,12 @@ module controller
 	 output reg dDST_BUF, 
 	 output reg SRAM_BUF, 
 	 output reg SRAM_MUX, 
-	 output reg ALU_BUF, 
+	 //output reg ALU_BUF, 
 	 output reg VGA_BUF, 
 	 output reg IMM_MUX,
+	 output reg PSR_EN,
+	 output reg PC_EN,
+	 output reg WRITE,
 	 output reg [`REGWIDTH-1:0] rDst,
 	 output reg [`REGWIDTH-1:0] rSrc,
 	 output reg [`IMMWIDTH-1:0] imm_val, 
@@ -88,7 +91,7 @@ module controller
 									`OR:	 ns = `EXECUTE;
 									`XOR:  ns = `EXECUTE;
 									`MOV:	 ns = `EXECUTE;
-									default: ns = `FETCH;`
+									default: ns = `FETCH;
 								endcase
 							end // end rType
 						
@@ -153,9 +156,12 @@ module controller
 		dDST_BUF = 0;
 		SRAM_BUF = 0;
 		SRAM_MUX = 0;
-		ALU_BUF = 0;
+		//ALU_BUF = 0;
 		VGA_BUF = 0;
 		IMM_MUX = 0;
+		PSR_EN = 0;
+		PC_EN = 0;
+		WRITE = 0;
 		rDst = `REGWIDTH'b0;
 		rSrc = `REGWIDTH'b0;
 		imm_val = `IMMWIDTH'b0;
@@ -167,7 +173,97 @@ module controller
 				end
 			`DECODE:
 				begin
-					;
+					//inst[15:12]
+					case(inst[`DATAWIDTH-1:`DATAWIDTH-`OPWIDTH]) 
+						
+						//////////////////////////
+						// I-TYPES
+						`ADDI:
+							begin
+								BRANCH = 0; 
+								JUMP = 0;
+								RA_BUF = 0;
+								ROM_MUX = 0;
+								dDST_BUF = 0;
+								SRAM_BUF = 0;
+								SRAM_MUX = 0;
+								//ALU_BUF = 0;
+								VGA_BUF = 0;
+								IMM_MUX = 0;
+								PSR_EN = 0;
+								PC_EN = 0;
+								WRITE = 0;
+								rDst = `REGWIDTH'b0;
+								rSrc = `REGWIDTH'b0;
+								imm_val = `IMMWIDTH'b0;
+								ALU_OP = `ALUOPWIDTH'b0;
+							end
+						`ADDUI:
+						`SUBI: 
+						`CMPI: 
+						`ANDI: 
+						`ORI:	 
+						`XORI: 
+						`MOVI: 
+						`LUI:	 
+						
+						//////////////////////////
+						// R-TYPE
+						`RTYPE: 
+							begin
+								//inst[7:4]
+								case(inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH])
+									`ADD:	
+									`ADDU:
+									`SUB:	
+									`CMP: 
+									`AND: 
+									`OR:	
+									`XOR: 
+									`MOV:	
+									default:
+								endcase
+							end // end rType
+						
+						//////////////////////////
+						// O-TYPE
+						`OTYPE:
+							begin
+								//inst[7:4]
+								case(inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH])
+									`LOAD:  
+									`STOR:  
+									`SCOND: 
+									`JCOND: 
+									`JAL:   
+									default:
+								endcase
+							end // end oType
+						
+						//////////////////////////
+						// BRANCH-TYPE
+						`BCOND: ;
+						
+						//////////////////////////
+						// SHIFT-TYPE
+						`STYPE:
+							begin
+							 //inst[7:4]
+								case(inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH])
+									`LSH: 
+									`LLSHI: 
+									`LRSHI: 
+									`ASHU:  
+									`ALSHUI: 
+									`ARSHUI: 
+									default:
+								endcase
+							end
+						
+						//////////////////////////
+						// Unknown op-codes
+						default: ns = `FETCH;
+					endcase
 				end
 			`EXECUTE:
 				begin
