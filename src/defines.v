@@ -10,7 +10,7 @@
 `define PRSWIDTH 		5
 `define ALUOPWIDTH	5
 `define REGWIDTH		4
-`define IMMSIZE		8
+`define IMMWIDTH		8
 
 //////////////////////////
 // Conditional Types

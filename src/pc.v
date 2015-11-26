@@ -24,8 +24,8 @@
 module pc
 	(input clk, rst, branch, jump, pcEn,
 	 input [`IMMWIDTH-1:0] disp,
-	 input [`DATAWIDTH-1:0] dDst,
-	 output [`DATAWIDTH-1:0] pc1,
+	 input [`DATAWIDTH-1:0] dSrc,
+	 output reg [`DATAWIDTH-1:0] pc1,
 	 output reg [`DATAWIDTH-1:0] pc);
 
 	wire signed [`DATAWIDTH-1:0] bmux_out, pc_next;
@@ -41,9 +41,9 @@ module pc
 	assign bmux_out = (branch) ? {{8{disp[`IMMWIDTH-1]}},disp} : 16'd1;
 	
 	// Add the dispalcement
-	assign pc1 = pc + bmux_out;
+	assign pc1 = $signed(pc) + bmux_out;
 	
 	// Consider jumps
-	assign pc_next = (jump) ? dDst : pc1;
+	assign pc_next = (jump) ? dSrc : pc1;
 
 endmodule

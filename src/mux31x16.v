@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date:    18:21:03 11/20/2015 
+// Create Date:    14:59:14 11/21/2015 
 // Design Name: 
-// Module Name:    tribuf 
+// Module Name:    mux_bus2regfile 
 // Project Name: 
 // Target Devices: 
 // Tool versions: 
@@ -18,11 +18,21 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module tribuf
-	(input din, 
-	 input en,
-    output dout);
-
-	assign dout = en ? din : 1'bz;
+`include "defines.v"
+module mux31x16
+	(input [1:0] cntrl,
+	 input [`DATAWIDTH-1:0] arg1,
+	 input [`DATAWIDTH-1:0] arg2,
+	 input [`DATAWIDTH-1:0] arg3,
+    output reg [`DATAWIDTH-1:0] dout
+	 );
+	 
+	always@(*) begin
+		case(cntrl)
+			2'b01: dout = arg2;
+			2'b10: dout = arg3;
+			default: dout = arg1;
+		endcase
+	end
 
 endmodule
