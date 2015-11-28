@@ -35,7 +35,7 @@ module alu
 			`ALUOp_AND: 	temp = dSrc & dDst;
 			`ALUOp_OR: 		temp = dSrc | dDst;
 			`ALUOp_XOR: 	temp = dSrc ^ dDst;
-			`ALUOp_SLL:		temp = dDst << dSrc[`REGWIDTH-1:0]; // can only shift by +/- 2**REGWIDTH
+			`ALUOp_SLL:		temp = dDst << dSrc[`REGWIDTH-1:0]; // can only shift by +/- 2**REGWIDTH-1
 			`ALUOp_SRL:		temp = dDst >> dSrc[`REGWIDTH-1:0];
 			`ALUOp_SLA:		temp = dstSigned <<< dSrc[`REGWIDTH-1:0];
 			`ALUOp_SRA:		temp = dstSigned >>> dSrc[`REGWIDTH-1:0];

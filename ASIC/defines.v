@@ -16,24 +16,24 @@
 //////////////////////////
 // Conditional Types
 `define EQ 4'b0000 // equal
-`define CS 4'b0001 // carry set
-`define HI 4'b0010 // higher than (unsigned)
-`define GT 4'b0011 // greater than (signed)
-`define FS 4'b0100 // overflow
-`define HS 4'b0101 // higher than or same as (unsigned)
-`define GE 4'b0110 // greater than or equal (signed)
+`define CS 4'b0010 // carry set
+`define HI 4'b0100 // higher than (unsigned)
+`define GT 4'b0110 // greater than (signed)
+`define FS 4'b1000 // flag set - overflow
+`define HS 4'b1011 // higher than or same as (unsigned)
+`define GE 4'b1101 // greater than or equal (signed)
 
-`define NE 4'b1000 // not equal
-`define CC 4'b1001 // carry clear
-`define LS 4'b1010 // lower than or same as (unsigned)
-`define LE 4'b1011 // less than or equal (signed)
-`define FC 4'b1100 // no overflow
-`define LO 4'b1101 // lower than (unsigned)
-`define LT 4'b1110 // less than (signed)
+`define NE 4'b0001 // not equal
+`define CC 4'b0011 // carry clear
+`define LS 4'b0101 // lower than or same as (unsigned)
+`define LE 4'b0111 // less than or equal (signed)
+`define FC 4'b1001 // flag clear - no overflow
+`define LO 4'b1010 // lower than (unsigned)
+`define LT 4'b1100 // less than (signed)
 
-`define UC 4'b0111 // branch unconditionally
+`define UC 4'b1110 // branch unconditionally
 
-`define CondType_Ig 4'b1111
+`define CondType_Ig 4'b1111 // Ignore
 
 //////////////////////////
 // Conditional Op codes
@@ -115,7 +115,7 @@
 `define ALUOp_SRA		5'b10011 // shift right arithmetic
 
 //////////////////////////
-// Datapath configurations {BRANCH, JUMP, RA_BUF, ROM_MUX, dDST_BUF, SRAM_BUF, SRAM_MUX, ALU_BUF, VGA_BUF, IMM_MUX}
+// Datapath configurations {BRANCH, JUMP, RA_MUX, ROM_MUX, MEMC_MUX, SRAM_MUX, ALU_BUF, VGA_BUF, IMM_MUX}
 `define DP_ITYPE	10'b0_0_0_0_
 `define DP_BCOND	10'b0_0_0_1_1_11
 `define DP_RTYPE	10'b1_0_0_0_0_11

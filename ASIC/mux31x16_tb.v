@@ -26,6 +26,7 @@ module mux31x16_tb;
 
 	// Inputs
 	reg [1:0] cntrl;
+	reg [15:0] arg0;
 	reg [15:0] arg1;
 	reg [15:0] arg2;
 	reg [15:0] arg3;
@@ -39,6 +40,7 @@ module mux31x16_tb;
 	// Instantiate the Unit Under Test (UUT)
 	mux31x16 uut (
 		.cntrl(cntrl), 
+		.arg0(arg0),
 		.arg1(arg1), 
 		.arg2(arg2), 
 		.arg3(arg3), 
@@ -48,6 +50,7 @@ module mux31x16_tb;
 	initial begin
 		// Initialize Inputs
 		cntrl = 0;
+		arg0 = 0;
 		arg1 = 0;
 		arg2 = 0;
 		arg3 = 0;
@@ -58,14 +61,17 @@ module mux31x16_tb;
 		// Add stimulus here
 		for(i = 0; i < 2**16; i = i + 1) begin
 			cntrl = i;
+			arg0 = i >> 4;
 			arg1 = i;
 			arg2[15:8] = i;
 			arg3 = i[15:8] >> 8;
 			#10;
 			case(cntrl)
-				2'b01: if(dout != arg2) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg2);
-				2'b10: if(dout != arg3) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg3);
-				default: if(dout != arg1) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg1);
+				2'b00: if(dout != arg0) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg0);
+				2'b01: if(dout != arg1) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg1);
+				2'b10: if(dout != arg2) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg2);
+				2'b11: if(dout != arg3) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,arg3);
+				default: if(dout != 16'd0) $display("ERROR @ time %d: dout is %h, but should be %h.", $time, dout,16'd0);
 			endcase
 		end
 		

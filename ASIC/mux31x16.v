@@ -21,6 +21,7 @@
 `include "defines.v"
 module mux31x16
 	(input [1:0] cntrl,
+	 input [`DATAWIDTH-1:0] arg0,
 	 input [`DATAWIDTH-1:0] arg1,
 	 input [`DATAWIDTH-1:0] arg2,
 	 input [`DATAWIDTH-1:0] arg3,
@@ -29,9 +30,11 @@ module mux31x16
 	 
 	always@(*) begin
 		case(cntrl)
-			2'b01: dout = arg2;
-			2'b10: dout = arg3;
-			default: dout = arg1;
+			2'b00: dout = arg0;
+			2'b01: dout = arg1;
+			2'b10: dout = arg2;
+			2'b11: dout = arg3;
+			default: dout = 16'd0;
 		endcase
 	end
 

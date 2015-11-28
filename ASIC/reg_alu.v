@@ -9,11 +9,10 @@ module reg_alu
 	 (input  clk,
 	  input  write, 									// signal to write dDst to rDst
 	  input  IMM_MUX, 								// signal to input dSrc or immediate
-	  input  SRAM_OUT, 								// signal to SRAM data out buffer
-	  input  RA_BUF, 									// signal to Return Address buffer
+	  input 	[1:0] WB_MUX,							// Write Back multiplexor
 	  input  [`REGWIDTH-1:0] 	rSrc, rDst, 	// src and dst register locations
 	  input 	[`ALUOPWIDTH-1:0] aluOp, 			// alu Opcode
-	  input  [`DATAWIDTH-1:0] 	pc,				// program counter
+	  input  [`DATAWIDTH-1:0] 	pc1,				// program counter
 	  input  [`DATAWIDTH-1:0] 	imm,				// immediate value
 	  input  [`DATAWIDTH-1:0] 	mem_data, 		// data from memory
 	  output [`DATAWIDTH-1:0] 	dSrc, dDst,		// src and dst register data
@@ -30,16 +29,6 @@ module reg_alu
 	// mux for immediate value
 	assign alu_rSrc = IMM_MUX ? imm : dSrc;
 	
-	mux31x16 regin_mux(.cntrl({RA_BUF,SRAM_OUT}), .arg1(alu_Result), .arg2(mem_data), .arg3(pc), .dout(regInBus));
-	
-// buffer on ALU, PC and SRAM	
-// tribuf16 _tbSRAM(.din(mem_data), .en(SRAM_OUT), .dout(regInBus)); 
-// tribuf16 _tbALU (.din(alu_Result), .en(ALU_OUT), .dout(regInBus));
-// tribuf16 _tbRA	 (.din(pc), .en(RA_BUF), .dout(regInBus));
-	
-//	assign regInBus = SRAM_OUT ? mem_data   : 16'bz;
-//	assign regInBus = ALU_OUT 	? alu_Result : 16'bz;
-//	assign regInBus = RA_BUF 	? pc 			 : 16'bz;
-
-	
+	mux31x16 regin_mux(.cntrl(WB_MUX), .arg0(pc1), .arg1({15'b0, COND_RSLT}), .arg2(alu_Result), .arg3(mem_data), .dout(regInBus));
+		
 endmodule

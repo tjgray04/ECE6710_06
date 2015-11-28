@@ -30,12 +30,11 @@ module reg_alu_tb;
 	reg clk;
 	reg write;
 	reg IMM_MUX;
-	reg SRAM_OUT;
-	reg RA_BUF;
+	reg [1:0] WB_MUX;
 	reg [3:0] rSrc;
 	reg [3:0] rDst;
 	reg [4:0] aluOp;
-	reg [15:0] pc;
+	reg [15:0] pc1;
 	reg [15:0] imm;
 	reg [15:0] mem_data;
 
@@ -76,12 +75,11 @@ module reg_alu_tb;
 		.clk(clk), 
 		.write(write), 
 		.IMM_MUX(IMM_MUX), 
-		.SRAM_OUT(SRAM_OUT),
-		.RA_BUF(RA_BUF),
+		.WB_MUX(WB_MUX),
 		.rSrc(rSrc), 
 		.rDst(rDst), 
 		.aluOp(aluOp), 
-		.pc(pc), 
+		.pc1(pc1), 
 		.imm(imm), 
 		.mem_data(mem_data), 
 		.dSrc(dSrc), 
@@ -95,12 +93,11 @@ module reg_alu_tb;
 		rst = 1;
 		write = 0;
 		IMM_MUX = 0;
-		SRAM_OUT = 0;
-		RA_BUF = 0;
+		WB_MUX = 0;
 		rSrc = 0;
 		rDst = 0;
 		aluOp = 0;
-		pc = 0;
+		pc1 = 0;
 		imm = 0;
 		mem_data = 0;
 		
@@ -264,12 +261,11 @@ module reg_alu_tb;
 	always@(ps) begin
 		write = 1'b0; 		// 1-bit
 		IMM_MUX = 1'b0; 	// 1-bit
-		SRAM_OUT = 1'b0;	// 1-bit
-		RA_BUF = 1'b0;		// 1-bit		
+		WB_MUX = 2'b10;		// 2-bit	
 		rSrc = 4'b0; 		// 4-bit
 		rDst = 4'b0; 		// 4-bit
 		aluOp = 5'b0; 		// 5-bit
-		pc = 16'b0; 		// 16-bit
+		pc1 = 16'b0; 		// 16-bit
 		imm = 16'b0; 		// 16-bit
 		mem_data = 16'b0; // 16-bit
 		case(ps)
@@ -314,7 +310,7 @@ module reg_alu_tb;
 					write = 1'b1; 	
 					rSrc = 4'd2; 	
 					rDst = 4'd3; 
-					SRAM_OUT = 1'b1;
+					WB_MUX = 2'b11;
 					mem_data = 16'd10;
 				end	
 			s7: begin // CMP r1, r3
@@ -351,7 +347,7 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc = 16'b0; 	
+//					pc1 = 16'b0; 	
 //					imm = 16'b0;
 //					mem_data = 16'b0;
 //				end	
@@ -361,7 +357,7 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc = 16'b0; 	
+//					pc1 = 16'b0; 	
 //					imm = 16'b0;
 //					mem_data = 16'b0;
 //				end	
@@ -371,7 +367,7 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc = 16'b0; 	
+//					pc1 = 16'b0; 	
 //					imm = 16'b0;
 //					mem_data = 16'b0;
 //				end	
@@ -381,7 +377,7 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc = 16'b0; 	
+//					pc1 = 16'b0; 	
 //					imm = 16'b0;
 //					mem_data = 16'b0;
 //				end	
@@ -391,7 +387,7 @@ module reg_alu_tb;
 							rSrc = 4'b0; 	
 							rDst = 4'b0; 	
 							aluOp = 5'b0; 	
-							pc = 16'b0; 	
+							pc1 = 16'b0; 	
 							imm = 16'b0; 	
 							mem_data = 16'b0;
 						end
