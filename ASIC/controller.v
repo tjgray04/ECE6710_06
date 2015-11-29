@@ -30,13 +30,12 @@ module controller
 	 output reg ROM_MUX, 
 	 output reg MEMC_MUX, 
 	 //output reg ALU_BUF, 
-	 output reg VGA_BUF, 
 	 output reg IMM_MUX,
 	 output reg PSR_EN,
 	 output reg PC_EN,
 	 output reg WRITE,
 	 output reg COND_RSLT,
-	 output reg [2:0] WB_MUX, 
+	 output reg [1:0] WB_MUX, 
 	 output reg [`REGWIDTH-1:0] rDst,
 	 output reg [`REGWIDTH-1:0] rSrc,
 	 output reg [`IMMWIDTH-1:0] imm_val, 
@@ -46,7 +45,7 @@ module controller
 	reg [4:0] ps, ns;
 	
 	// Present State
-	always@(posedge clk) begin
+	always@(posedge clk, negedge rst) begin
 		if(!rst)
 			ps <= `FETCH;
 		else
@@ -154,7 +153,6 @@ module controller
 		MEMC_MUX = 0;
 		WB_MUX = 2'b10;
 		//ALU_BUF = 0;
-		VGA_BUF = 0;
 		IMM_MUX = 0;
 		PSR_EN = 0;
 		PC_EN = 0;
@@ -210,6 +208,7 @@ module controller
 							begin
 								rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
 								imm_val = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-1:0];
+								ALU_OP = `ALUOp_SUB;
 								IMM_MUX = 1;
 								PSR_EN = 1;
 								PC_EN = 1;
@@ -302,6 +301,7 @@ module controller
 										begin
 											rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
 											rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
+											ALU_OP = `ALUOp_SUB;
 											PSR_EN = 1;
 											PC_EN = 1;
 										end
@@ -539,7 +539,7 @@ module controller
 					MEMC_MUX = 1;
 					WRITE = 1;
 					WB_MUX = 2'b11;
-					PC_EN =1;
+					PC_EN = 1;
 				end
 //			`LOAD1:
 //				begin

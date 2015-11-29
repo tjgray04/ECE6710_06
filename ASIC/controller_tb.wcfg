@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Steve Brown/Utah/Fall 2015/ECE 6710/Team Project/GIT/ASIC/controller_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="controller_tb" />
+            <top_module name="glbl" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="22" />
+   <wvobject fp_name="/controller_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/BRANCH" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">BRANCH</obj_property>
+      <obj_property name="ObjectShortName">BRANCH</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/JUMP" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">JUMP</obj_property>
+      <obj_property name="ObjectShortName">JUMP</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/ROM_MUX" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ROM_MUX</obj_property>
+      <obj_property name="ObjectShortName">ROM_MUX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/MEMC_MUX" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">MEMC_MUX</obj_property>
+      <obj_property name="ObjectShortName">MEMC_MUX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/IMM_MUX" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">IMM_MUX</obj_property>
+      <obj_property name="ObjectShortName">IMM_MUX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/PSR_EN" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">PSR_EN</obj_property>
+      <obj_property name="ObjectShortName">PSR_EN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/PC_EN" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">PC_EN</obj_property>
+      <obj_property name="ObjectShortName">PC_EN</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/WRITE" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">WRITE</obj_property>
+      <obj_property name="ObjectShortName">WRITE</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/COND_RSLT" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">COND_RSLT</obj_property>
+      <obj_property name="ObjectShortName">COND_RSLT</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/WB_MUX" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">WB_MUX[1:0]</obj_property>
+      <obj_property name="ObjectShortName">WB_MUX[1:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/rDst" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rDst[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rDst[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/rSrc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rSrc[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rSrc[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/imm_val" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">imm_val[7:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_val[7:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/ALU_OP" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ALU_OP[4:0]</obj_property>
+      <obj_property name="ObjectShortName">ALU_OP[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/psr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">psr[4:0]</obj_property>
+      <obj_property name="ObjectShortName">psr[4:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/ps_en" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">ps_en</obj_property>
+      <obj_property name="ObjectShortName">ps_en</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/ps" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ps[4:0]</obj_property>
+      <obj_property name="ObjectShortName">ps[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/ns" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ns[4:0]</obj_property>
+      <obj_property name="ObjectShortName">ns[4:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/inst" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">inst[15:0]</obj_property>
+      <obj_property name="ObjectShortName">inst[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/controller_tb/i" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+</wave_config>
