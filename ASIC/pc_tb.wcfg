@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Steve Brown/Utah/Fall 2015/ECE 6710/Team Project/GIT/ASIC/pc_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="pc_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="14" />
+   <wvobject fp_name="/pc_tb/pc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pc[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/pc1" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc1[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pc1[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/branch" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">branch</obj_property>
+      <obj_property name="ObjectShortName">branch</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/jump" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">jump</obj_property>
+      <obj_property name="ObjectShortName">jump</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/pcEn" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pcEn</obj_property>
+      <obj_property name="ObjectShortName">pcEn</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/uut/bmux_out" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">bmux_out[15:0]</obj_property>
+      <obj_property name="ObjectShortName">bmux_out[15:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/uut/pc_next" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pc_next[15:0]</obj_property>
+      <obj_property name="ObjectShortName">pc_next[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/disp" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">disp[7:0]</obj_property>
+      <obj_property name="ObjectShortName">disp[7:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/dSrc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">dSrc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">dSrc[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/ps" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ps[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ps[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/ns" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">ns[3:0]</obj_property>
+      <obj_property name="ObjectShortName">ns[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/pc_tb/i" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">i[31:0]</obj_property>
+      <obj_property name="ObjectShortName">i[31:0]</obj_property>
+   </wvobject>
+</wave_config>
