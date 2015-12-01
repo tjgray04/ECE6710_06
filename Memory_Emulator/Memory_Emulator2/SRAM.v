@@ -18,7 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
-module StackMemory #(parameter WIDTH = 32, RAM_ADDR_BITS = 10)
+module SRAM #(parameter WIDTH = 16, RAM_ADDR_BITS = 17)
 	(input clk, CE, OE, WE,
 	 input [WIDTH-1:0] input_data,
 	 input [RAM_ADDR_BITS-1:0] address,
@@ -48,6 +48,10 @@ module StackMemory #(parameter WIDTH = 32, RAM_ADDR_BITS = 10)
 		if(!CE)
 			begin
 				count <= count + 1'b1;
+			end
+		if(count >= 6 || (CE))
+			begin
+				count <= 0;
 			end
 	end
 	
