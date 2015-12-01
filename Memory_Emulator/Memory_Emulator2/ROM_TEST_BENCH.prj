@@ -1,0 +1,2 @@
+verilog work "../Memory_Emulator/ROM.v"
+verilog work "../Memory_Emulator/ROM_TEST_BENCH.v"

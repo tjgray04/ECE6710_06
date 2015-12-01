@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- IMPORTANT: This is an internal file that has been generated
+     by the Xilinx ISE software.  Any direct editing or
+     changes made to this file may result in unpredictable
+     behavior or data corruption.  It is strongly advised that
+     users do not edit the contents of this file. -->
+<messages>
+<msg type="warning" file="HDLCompiler" num="872" delta="new" >"C:\Users\Travis\Documents\GitHub\ECE6710_06\Memory_Emulator\Memory_Emulator\ROM_TEST_BENCH.v" Line 46: Using initial value of <arg fmt="%s" index="1">CE</arg> since it is never assigned
+</msg>
+
+<msg type="warning" file="HDLCompiler" num="1670" delta="new" >"C:\Users\Travis\Documents\GitHub\ECE6710_06\Memory_Emulator\Memory_Emulator\ROM.v" Line 36: Signal &lt;<arg fmt="%s" index="1">ROM</arg>&gt; in initial block is partially initialized.
+</msg>
+
+</messages>

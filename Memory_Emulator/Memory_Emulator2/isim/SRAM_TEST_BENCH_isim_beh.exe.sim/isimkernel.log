@@ -1,0 +1,10 @@
+Command line:
+   SRAM_TEST_BENCH_isim_beh.exe
+     -simmode  gui
+     -simrunnum  0
+     -socket  4293
+
+Mon Nov 30 20:46:23 2015
+
+
+ Elaboration Time: 0.249601 sec
