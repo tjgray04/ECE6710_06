@@ -30,17 +30,19 @@ module reg_alu_tb;
 	reg clk;
 	reg write;
 	reg IMM_MUX;
+	reg COND_RSLT;
 	reg [1:0] WB_MUX;
 	reg [3:0] rSrc;
 	reg [3:0] rDst;
 	reg [4:0] aluOp;
-	reg [15:0] pc1;
-	reg [15:0] imm;
+	reg [15:0] pc_ra;
+	reg [7:0] imm_in;
 	reg [15:0] mem_data;
 
 	// Outputs
 	wire [15:0] dSrc;
 	wire [15:0] dDst;
+	wire [15:0] alu_Result;
 	wire [4:0]  psrOut;
 
 	// Reset 
@@ -75,15 +77,17 @@ module reg_alu_tb;
 		.clk(clk), 
 		.write(write), 
 		.IMM_MUX(IMM_MUX), 
+		.COND_RSLT(COND_RSLT),
 		.WB_MUX(WB_MUX),
 		.rSrc(rSrc), 
 		.rDst(rDst), 
 		.aluOp(aluOp), 
-		.pc1(pc1), 
-		.imm(imm), 
+		.pc_ra(pc_ra), 
+		.imm_in(imm_in), 
 		.mem_data(mem_data), 
 		.dSrc(dSrc), 
 		.dDst(dDst), 
+		.alu_Result(alu_Result),
 		.psrOut(psrOut)
 	);
 
@@ -93,12 +97,13 @@ module reg_alu_tb;
 		rst = 1;
 		write = 0;
 		IMM_MUX = 0;
+		COND_RSLT = 0;
 		WB_MUX = 0;
 		rSrc = 0;
 		rDst = 0;
 		aluOp = 0;
-		pc1 = 0;
-		imm = 0;
+		pc_ra = 0;
+		imm_in = 0;
 		mem_data = 0;
 		
 		$display("BEGINNING SIMULATION...");
@@ -132,7 +137,7 @@ module reg_alu_tb;
 						if(dDst != 16'd10) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s2, dDst, 16'd10);
 					 end 
 				s3: begin //s3: begin // LUI r2, 255
-						if(psrOut != 5'b10010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s3, psrOut, 5'b10010);
+						if(psrOut != 5'b00010) $display("ERROR @ time %d in state %d: psrOut is %b, but should be %b.", $time, s3, psrOut, 5'b00010);
 						#5;
 						//if(dSrc != 16'd) 	$display("ERROR @ time %d in state %d: dSrc is %h, but should be %h.", $time, s3, dSrc, ___);
 						if(dDst != ({8'd255,8'b0})) 	$display("ERROR @ time %d in state %d: dDst is %h, but should be %h.", $time, s3, dDst, ({8'd255,8'b0}));
@@ -261,12 +266,13 @@ module reg_alu_tb;
 	always@(ps) begin
 		write = 1'b0; 		// 1-bit
 		IMM_MUX = 1'b0; 	// 1-bit
+		COND_RSLT = 1'b0;	// 1-bit
 		WB_MUX = 2'b10;		// 2-bit	
 		rSrc = 4'b0; 		// 4-bit
 		rDst = 4'b0; 		// 4-bit
 		aluOp = 5'b0; 		// 5-bit
-		pc1 = 16'b0; 		// 16-bit
-		imm = 16'b0; 		// 16-bit
+		pc_ra = 16'b0; 		// 16-bit
+		imm_in = 8'b0; 		// 16-bit
 		mem_data = 16'b0; // 16-bit
 		case(ps)
 			s0: begin // ANDI r1, 0
@@ -274,7 +280,7 @@ module reg_alu_tb;
 					IMM_MUX = 1'b1;
 					rDst = 4'b0001;
 					aluOp = `ALUOp_AND;
-					imm = 16'b0;
+					imm_in = 8'b0;
 				end	
 			s1: begin // MOV r2, r0
 					write = 1'b1;
@@ -287,14 +293,14 @@ module reg_alu_tb;
 					IMM_MUX = 1'b1;	
 					rDst = 4'b1; 	
 					aluOp = `ALUOp_ADD; 		
-					imm = 16'd10;
+					imm_in = 8'd10;
 				end	
 			s3: begin // LUI r2, 255
 					write = 1'b1; 	
 					IMM_MUX = 1'b1;
 					rDst = 4'd2; 	
 					aluOp = `ALUOp_LUI; 		
-					imm = 16'd255;
+					imm_in = 8'd255;
 				end	
 			s4: begin  // STOR r1, r2 -- r1 = datain, r2 = addr 	
 					rSrc = 4'd2; 	
@@ -325,21 +331,21 @@ module reg_alu_tb;
 					IMM_MUX = 1'b1;	
 					rDst = 4'd4; 	
 					aluOp = `ALUOp_MOV; 		
-					imm = 16'b1;
+					imm_in = 8'b1;
 				end	
 			s10: begin // LLSHI r4, 15
 					write = 1'b1; 	
 					IMM_MUX = 1'b1;	
 					rDst = 4'd4; 	
 					aluOp = `ALUOp_SLL; 		
-					imm = 16'hf;
+					imm_in = 8'hf;
 				end	
 			s11: begin // ARSHUI r4, 15
 					write = 1'b1; 	
 					IMM_MUX = 1'b1;
 					rDst = 4'd4; 	
 					aluOp = `ALUOp_SRA; 		
-					imm = 16'hf;
+					imm_in = 8'hf;
 				end		
 //			s12: begin
 //					write = 1'b0; 	
@@ -347,8 +353,8 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc1 = 16'b0; 	
-//					imm = 16'b0;
+//					pc_ra = 16'b0; 	
+//					imm_in = 8'b0;
 //					mem_data = 16'b0;
 //				end	
 //			s13: begin
@@ -357,8 +363,8 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc1 = 16'b0; 	
-//					imm = 16'b0;
+//					pc_ra = 16'b0; 	
+//					imm_in = 8'b0;
 //					mem_data = 16'b0;
 //				end	
 //			s14: begin
@@ -367,8 +373,8 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc1 = 16'b0; 	
-//					imm = 16'b0;
+//					pc_ra = 16'b0; 	
+//					imm_in = 8'b0;
 //					mem_data = 16'b0;
 //				end	
 //			s15: begin
@@ -377,8 +383,8 @@ module reg_alu_tb;
 //					rSrc = 4'b0; 	
 //					rDst = 4'b0; 	
 //					aluOp = 5'b0; 	
-//					pc1 = 16'b0; 	
-//					imm = 16'b0;
+//					pc_ra = 16'b0; 	
+//					imm_in = 8'b0;
 //					mem_data = 16'b0;
 //				end	
 			default: begin
@@ -387,8 +393,8 @@ module reg_alu_tb;
 							rSrc = 4'b0; 	
 							rDst = 4'b0; 	
 							aluOp = 5'b0; 	
-							pc1 = 16'b0; 	
-							imm = 16'b0; 	
+							pc_ra = 16'b0; 	
+							imm_in = 8'b0; 	
 							mem_data = 16'b0;
 						end
 		endcase

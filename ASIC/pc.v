@@ -24,7 +24,7 @@
 module pc
 	(input clk, rst, branch, jump, pcEn,
 	 input [`IMMWIDTH-1:0] disp,
-	 input [`DATAWIDTH-1:0] dDst,
+	 input [`DATAWIDTH-1:0] dSrc,
 	 output [`DATAWIDTH-1:0] pc_ra,
 	 output reg [`DATAWIDTH-1:0] pc);
 
@@ -44,6 +44,6 @@ module pc
 	assign pc_ra = pc + bmux_out;
 	
 	// Consider jumps
-	assign pc_next = (jump) ? dDst : pc_ra;
+	assign pc_next = (jump) ? dSrc : pc_ra;
 
 endmodule

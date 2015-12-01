@@ -38,7 +38,7 @@ module controller_tb;
 	wire ROM_MUX;
 	wire MEMC_MUX;
 	wire IMM_MUX;
-	wire PSR_EN;
+//	wire PSR_EN;
 	wire PC_EN;
 	wire WRITE;
 	wire COND_RSLT;
@@ -89,14 +89,14 @@ module controller_tb;
 	controller uut (
 		.clk(clk), 
 		.rst(rst), 
-		.psr(psr), 
+		.psr_in(psr), 
 		.inst(inst), 
 		.BRANCH(BRANCH), 
 		.JUMP(JUMP), 
 		.ROM_MUX(ROM_MUX), 
 		.MEMC_MUX(MEMC_MUX), 
 		.IMM_MUX(IMM_MUX), 
-		.PSR_EN(PSR_EN), 
+//		.PSR_EN(PSR_EN), 
 		.PC_EN(PC_EN), 
 		.WRITE(WRITE), 
 		.COND_RSLT(COND_RSLT), 
@@ -123,7 +123,7 @@ module controller_tb;
       rst = 1;  
 		#5;
 		// Add stimulus here
-		for(i = 0; i < 16; i = i + 1) begin
+		for(i = 0; i < 32; i = i + 1) begin
 			#20;
 			case(ps)
 				s0: // MOV R1, R0
@@ -133,7 +133,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s0, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s0, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s0, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s0, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s0, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s0, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s0, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s0, COND_RSLT, 0);
@@ -150,7 +150,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s1, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s1, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s1, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s1, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s1, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s1, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s1, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s1, COND_RSLT, 0);
@@ -167,7 +167,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s2, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s2, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s2, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s2, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s2, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s2, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s2, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s2, COND_RSLT, 0);
@@ -184,7 +184,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s3, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s3, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s3, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s3, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s3, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s3, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s3, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s3, COND_RSLT, 0);
@@ -201,7 +201,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s4, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s4, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s4, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s4, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s4, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s4, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s4, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s4, COND_RSLT, 0);
@@ -218,7 +218,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s5, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s5, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s5, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s5, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s5, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s5, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s5, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s5, COND_RSLT, 0);
@@ -235,7 +235,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s6, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s6, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s6, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s6, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s6, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s6, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s6, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s6, COND_RSLT, 0);
@@ -252,7 +252,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s7, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s7, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s7, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s7, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s7, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s7, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s7, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s7, COND_RSLT, 0);
@@ -269,7 +269,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s8, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s8, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s8, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s8, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s8, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s8, PC_EN, 1);
 						if(WRITE != 0) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s8, WRITE, 0);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s8, COND_RSLT, 0);
@@ -287,7 +287,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s10, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s10, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s10, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s10, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s10, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s10, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s10, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s10, COND_RSLT, 0);
@@ -304,7 +304,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s11, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s11, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s11, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s11, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s11, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s11, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s11, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s11, COND_RSLT, 0);
@@ -321,7 +321,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s12, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s12, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s12, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s12, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s12, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s12, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s12, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s12, COND_RSLT, 0);
@@ -338,7 +338,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s13, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s13, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s13, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s13, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s13, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s13, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s13, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s13, COND_RSLT, 0);
@@ -355,7 +355,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s14, ROM_MUX, 0);
 						if(MEMC_MUX != 1) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s14, MEMC_MUX, 1);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s14, IMM_MUX, 0);
-						if(PSR_EN != 0) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s14, PSR_EN, 0);
+//						if(PSR_EN != 0) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s14, PSR_EN, 0);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s14, PC_EN, 1);
 						if(WRITE != 0) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s14, WRITE, 0);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s14, COND_RSLT, 0);
@@ -372,7 +372,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s15, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s15, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s15, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s15, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s15, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s15, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s15, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s15, COND_RSLT, 0);
@@ -389,7 +389,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s16, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s16, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s16, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s16, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s16, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s16, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s16, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s16, COND_RSLT, 0);
@@ -406,7 +406,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s17, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s17, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s17, IMM_MUX, 0);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s17, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s17, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s17, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s17, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s17, COND_RSLT, 0);
@@ -423,7 +423,7 @@ module controller_tb;
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s18, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s18, MEMC_MUX, 0);
 						if(IMM_MUX != 1) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s18, IMM_MUX, 1);
-						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s18, PSR_EN, 1);
+//						if(PSR_EN != 1) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s18, PSR_EN, 1);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s18, PC_EN, 1);
 						if(WRITE != 1) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s18, WRITE, 1);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s18, COND_RSLT, 0);
@@ -436,19 +436,19 @@ module controller_tb;
 				s19: // JUC LOOP
 					begin
 						if(BRANCH != 0) 	$display("ERROR @ time %d in state %d: BRANCH is %b, but should be %b.", 		$time, s19, BRANCH, 0);
-						if(JUMP != 1) 		$display("ERROR @ time %d in state %d: JUMP is %b, but should be %b.", 			$time, s19, JUMP, 1);
+						if(JUMP != 1) 		$display("ERROR @ time %d in state %d: JUMP is %b, but should be %b.", 			$time, s19, JUMP, 1'b1);
 						if(ROM_MUX != 0) 	$display("ERROR @ time %d in state %d: ROM_MUX is %b, but should be %b.", 		$time, s19, ROM_MUX, 0);
 						if(MEMC_MUX != 0) 	$display("ERROR @ time %d in state %d: MEMC_MUX is %b, but should be %b.", 		$time, s19, MEMC_MUX, 0);
 						if(IMM_MUX != 0) 	$display("ERROR @ time %d in state %d: IMM_MUX is %b, but should be %b.",		$time, s19, IMM_MUX, 0);
-						if(PSR_EN != 0) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s19, PSR_EN, 0);
+//						if(PSR_EN != 0) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s19, PSR_EN, 0);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s19, PC_EN, 1);
 						if(WRITE != 0) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s19, WRITE, 0);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s19, COND_RSLT, 0);
 						if(WB_MUX != 2'b10) 	$display("ERROR @ time %d in state %d: WB_MUX is %b, but should be %b.", 	$time, s19, WB_MUX, 2'b10);
 						//if(rDst != r4) 		$display("ERROR @ time %d in state %d: rDst is %b, but should be %b.", 		$time, s19, rDst, r4);
-						if(rSrc != r6) 		$display("ERROR @ time %d in state %d: rSrc is %b, but should be %b.", 			$time, s19, rSrc, r6);
-						if(imm_val != 8'hff) 	$display("ERROR @ time %d in state %d: imm_val is %b, but should be %b.", 	$time, s19, imm_val, 8'hff);
-						if(ALU_OP != `ALUOp_ADD) 	$display("ERROR @ time %d in state %d: ALU_OP is %b, but should be %b.",$time, s19, ALU_OP, `ALUOp_ADD);
+						//if(rSrc != r6) 		$display("ERROR @ time %d in state %d: rSrc is %b, but should be %b.", 			$time, s19, rSrc, r6);
+						//if(imm_val != 8'hff) 	$display("ERROR @ time %d in state %d: imm_val is %b, but should be %b.", 	$time, s19, imm_val, 8'hff);
+						//if(ALU_OP != `ALUOp_ADD) 	$display("ERROR @ time %d in state %d: ALU_OP is %b, but should be %b.",$time, s19, ALU_OP, `ALUOp_ADD);
 					end
 				s20: ;// END
 				default: ;
@@ -612,7 +612,7 @@ module controller_tb;
 			s18: // ADDI R6, 8
 				begin
 //					psr = 5'b0;
-					inst = {`ADDI, r2, 8'h08};
+					inst = {`ADDI, r6, 8'h08};
 				end	
 			s19: // JUC LOOP
 				begin

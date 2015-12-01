@@ -10,7 +10,27 @@
          </top_modules>
       </db_ref>
    </db_ref_list>
-   <WVObjectSize size="34" />
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/reg_alu_tb/rSrc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rSrc[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rSrc[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/reg_alu_tb/rDst" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rDst[3:0]</obj_property>
+      <obj_property name="ObjectShortName">rDst[3:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/reg_alu_tb/uut/imm_ex" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">imm_ex[15:0]</obj_property>
+      <obj_property name="ObjectShortName">imm_ex[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/reg_alu_tb/uut/alu_rSrc" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">alu_rSrc[15:0]</obj_property>
+      <obj_property name="ObjectShortName">alu_rSrc[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
    <wvobject fp_name="/reg_alu_tb/dSrc" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">dSrc[15:0]</obj_property>
       <obj_property name="ObjectShortName">dSrc[15:0]</obj_property>
@@ -25,10 +45,6 @@
       <obj_property name="ElementShortName">psrOut[4:0]</obj_property>
       <obj_property name="ObjectShortName">psrOut[4:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/reg_alu_tb/rst" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">rst</obj_property>
-      <obj_property name="ObjectShortName">rst</obj_property>
-   </wvobject>
    <wvobject fp_name="/reg_alu_tb/ps" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">ps[3:0]</obj_property>
       <obj_property name="ObjectShortName">ps[3:0]</obj_property>
@@ -38,6 +54,10 @@
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
    </wvobject>
+   <wvobject fp_name="/reg_alu_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
    <wvobject fp_name="/reg_alu_tb/write" type="logic" db_ref_id="1">
       <obj_property name="ElementShortName">write</obj_property>
       <obj_property name="ObjectShortName">write</obj_property>
@@ -46,38 +66,10 @@
       <obj_property name="ElementShortName">IMM_MUX</obj_property>
       <obj_property name="ObjectShortName">IMM_MUX</obj_property>
    </wvobject>
-   <wvobject fp_name="/reg_alu_tb/SRAM_OUT" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">SRAM_OUT</obj_property>
-      <obj_property name="ObjectShortName">SRAM_OUT</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/RA_BUF" type="logic" db_ref_id="1">
-      <obj_property name="ElementShortName">RA_BUF</obj_property>
-      <obj_property name="ObjectShortName">RA_BUF</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/rSrc" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">rSrc[3:0]</obj_property>
-      <obj_property name="ObjectShortName">rSrc[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/rDst" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">rDst[3:0]</obj_property>
-      <obj_property name="ObjectShortName">rDst[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
    <wvobject fp_name="/reg_alu_tb/aluOp" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">aluOp[4:0]</obj_property>
       <obj_property name="ObjectShortName">aluOp[4:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/pc" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">pc[15:0]</obj_property>
-      <obj_property name="ObjectShortName">pc[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/imm" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">imm[15:0]</obj_property>
-      <obj_property name="ObjectShortName">imm[15:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      <obj_property name="Radix">BINARYRADIX</obj_property>
    </wvobject>
    <wvobject fp_name="/reg_alu_tb/mem_data" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">mem_data[15:0]</obj_property>
@@ -92,86 +84,6 @@
    <wvobject fp_name="/reg_alu_tb/i" type="array" db_ref_id="1">
       <obj_property name="ElementShortName">i[31:0]</obj_property>
       <obj_property name="ObjectShortName">i[31:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s0" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s0[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s0[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s1" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s1[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s1[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s2" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s2[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s2[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s3" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s3[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s3[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s4" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s4[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s4[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s5" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s5[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s5[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s6" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s6[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s6[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s7" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s7[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s7[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s8" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s8[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s8[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s9" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s9[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s9[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s10" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s10[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s10[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s11" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s11[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s11[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s12" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s12[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s12[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s13" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s13[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s13[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s14" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s14[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s14[3:0]</obj_property>
-      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
-   </wvobject>
-   <wvobject fp_name="/reg_alu_tb/s15" type="array" db_ref_id="1">
-      <obj_property name="ElementShortName">s15[3:0]</obj_property>
-      <obj_property name="ObjectShortName">s15[3:0]</obj_property>
       <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
    </wvobject>
 </wave_config>

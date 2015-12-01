@@ -33,7 +33,7 @@ module pc_tb;
 	reg jump;
 	reg pcEn;
 	reg [7:0] disp;
-	reg [15:0] dDst;
+	reg [15:0] dSrc;
 
 	// Outputs
 	wire [15:0] pc_ra;
@@ -71,7 +71,7 @@ module pc_tb;
 		.jump(jump), 
 		.pcEn(pcEn), 
 		.disp(disp), 
-		.dDst(dDst), 
+		.dSrc(dSrc), 
 		.pc_ra(pc_ra),
 		.pc(pc)
 	);
@@ -84,7 +84,7 @@ module pc_tb;
 		jump = 0;
 		pcEn = 0;
 		disp = 0;
-		dDst = 0;
+		dSrc = 0;
 
 		// Wait 100 ns for global reset to finish
 		#90;
@@ -230,7 +230,7 @@ module pc_tb;
 		jump = 0;
 		pcEn = 0;
 		disp = 0;
-		dDst = 0;
+		dSrc = 0;
 		case(ps)
 			s0: // increment by 1
 				begin
@@ -252,13 +252,13 @@ module pc_tb;
 				begin
 					pcEn = 1;
 					jump = 1;
-					dDst = 16'd0;
+					dSrc = 16'd0;
 				end
 			s4: // jump to 0x8000
 				begin
 					pcEn = 1;
 					jump = 1;
-					dDst = 16'h8000;
+					dSrc = 16'h8000;
 				end
 			s5: // disable pcEn
 				begin
@@ -267,19 +267,19 @@ module pc_tb;
 				begin
 					pcEn = 1;
 					jump = 1;
-					dDst = 16'hffff;
+					dSrc = 16'hffff;
 				end
 			s7: // jump to ra
 				begin
 					pcEn = 1;
 					jump = 1;
-					dDst = 16'h8001;
+					dSrc = 16'h8001;
 				end
 			s8: // jump to 0x0000
 				begin
 					pcEn = 1;
 					jump = 1;
-					dDst = 16'd0;
+					dSrc = 16'd0;
 				end
 			s9: 
 				begin
@@ -306,7 +306,7 @@ module pc_tb;
 				begin
 					pcEn = 1;
 					jump = 1;
-					dDst = 16'd0;
+					dSrc = 16'd0;
 				end
 		endcase
 	end
