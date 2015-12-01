@@ -29,14 +29,14 @@ module SRAM_TEST_BENCH;
 	reg CE;
 	reg OE;
 	reg WE;
-	reg [31:0] input_data;
-	reg [9:0] address;
+	reg [15:0] input_data;
+	reg [16:0] address;
 
 	// Outputs
-	wire [31:0] stackData;
+	wire [15:0] stackData;
 
 	// Instantiate the Unit Under Test (UUT)
-	StackMemory uut (
+	SRAM uut (
 		.clk(clk), 
 		.CE(CE), 
 		.OE(OE), 
@@ -49,17 +49,23 @@ module SRAM_TEST_BENCH;
 	initial begin
 		// Initialize Inputs
 		clk = 0;
-		CE = 0;
+		CE = 1;
 		OE = 1;
-		WE = 0;
+		WE = 1;
 		input_data = 0;
-		address = 0;
+		address = 17'b0;
 
 		// Wait 100 ns for global reset to finish
 		#100;
         
 		// Add stimulus here
 		#100;
+		CE = 0;
+		OE = 1;
+		WE = 0;
+		input_data = 16'b1;
+		#100;
+		
 		CE = 0;
 		OE = 0;
 		WE = 1;

@@ -51,7 +51,7 @@ module ROM#(parameter WIDTH = 16, ROM_ADDR_BITS = 18)// assures 2^12 address spa
 			begin
 				count <= count + 1'b1;
 			end
-		else if((CE && count > 0))
+		else if((CE && count > 0) || count >= 6)
 			begin
 				count <= 0;
 			end
