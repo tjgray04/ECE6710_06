@@ -23,7 +23,7 @@
 
 module controller
 	(input clk, rst,
-	 input [`PRSWIDTH-1:0] psr,
+	 input [`PRSWIDTH-1:0] psr_in,
 	 input [`DATAWIDTH-1:0] inst,
 	 output reg BRANCH, 
 	 output reg JUMP, 
@@ -31,7 +31,7 @@ module controller
 	 output reg MEMC_MUX, 
 	 //output reg ALU_BUF, 
 	 output reg IMM_MUX,
-	 output reg PSR_EN,
+//	 output reg PSR_EN,
 	 output reg PC_EN,
 	 output reg WRITE,
 	 output reg COND_RSLT,
@@ -43,6 +43,18 @@ module controller
 
 	// FSM states
 	reg [4:0] ps, ns;
+	
+	// Internal registers/control signals
+	reg PSR_EN;
+	reg [`PRSWIDTH-1:0] psr;
+	
+	// Latch PSR only when enabled
+	always@(posedge clk) begin
+		if(PSR_EN)
+			psr <= psr_in;
+		else
+			psr <= psr;
+	end
 	
 	// Present State
 	always@(posedge clk, negedge rst) begin
@@ -412,7 +424,7 @@ module controller
 												`FC: JUMP = (!psr[`psrF]) ? 1'b1 : 1'b0;
 												`LO: JUMP = (!psr[`psrZ] & !psr[`psrL]) ? 1'b1 : 1'b0;
 												`LT: JUMP = (!psr[`psrZ] & !psr[`psrN]) ? 1'b1 : 1'b0;
-												`UC: JUMP = 1'b0;
+												`UC: JUMP = 1'b1;
 												default: JUMP = 1'b0;
 											endcase
 										end
