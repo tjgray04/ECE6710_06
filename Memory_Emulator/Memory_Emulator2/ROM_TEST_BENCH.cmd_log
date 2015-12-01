@@ -1,1 +1,0 @@
-xst -intstyle ise -ifn "C:/Users/Travis/Documents/GitHub/ECE6710_06/Memory_Emulator/Memory_Emulator2/ROM_TEST_BENCH.xst" -ofn "C:/Users/Travis/Documents/GitHub/ECE6710_06/Memory_Emulator/Memory_Emulator2/ROM_TEST_BENCH.syr" 

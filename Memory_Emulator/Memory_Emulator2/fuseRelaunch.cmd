@@ -1,1 +1,0 @@
--intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "C:/Users/Travis/Documents/GitHub/ECE6710_06/Memory_Emulator/Memory_Emulator2/SRAM_TEST_BENCH_isim_beh.exe" -prj "C:/Users/Travis/Documents/GitHub/ECE6710_06/Memory_Emulator/Memory_Emulator2/SRAM_TEST_BENCH_beh.prj" "work.SRAM_TEST_BENCH" "work.glbl" 
