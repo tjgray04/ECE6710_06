@@ -41,7 +41,13 @@ module controller_tb;
 //	wire PSR_EN;
 	wire PC_EN;
 	wire WRITE;
+	wire SRAM_CE; // Chip enable for SRAM
+	wire SRAM_OE; // Output enable for SRAM
+	wire SRAM_WE; // Write enable for SRAM
+	wire ROM_CE; // Chip enable for ROM
+	wire ROM_OE; // Output enable for ROM
 	wire COND_RSLT;
+	wire WB_MUX0;
 	wire [1:0] WB_MUX;
 	wire [3:0] rDst;
 	wire [3:0] rSrc;
@@ -99,7 +105,13 @@ module controller_tb;
 //		.PSR_EN(PSR_EN), 
 		.PC_EN(PC_EN), 
 		.WRITE(WRITE), 
+		.SRAM_CE(SRAM_CE),
+		.SRAM_OE(SRAM_OE),
+		.SRAM_WE(SRAM_WE),
+		.ROM_CE(ROM_CE),
+		.ROM_OE(ROM_OE),
 		.COND_RSLT(COND_RSLT), 
+		.WB_MUX0(WB_MUX0),
 		.WB_MUX(WB_MUX), 
 		.rDst(rDst), 
 		.rSrc(rSrc), 
@@ -358,6 +370,7 @@ module controller_tb;
 //						if(PSR_EN != 0) 	$display("ERROR @ time %d in state %d: PSR_EN is %b, but should be %b.", 		$time, s14, PSR_EN, 0);
 						if(PC_EN != 1) 		$display("ERROR @ time %d in state %d: PC_EN is %b, but should be %b.", 		$time, s14, PC_EN, 1);
 						if(WRITE != 0) 		$display("ERROR @ time %d in state %d: WRITE is %b, but should be %b.", 		$time, s14, WRITE, 0);
+						if(SRAM_WE != 0) 		$display("ERROR @ time %d in state %d: SRAM_WE is %b, but should be %b.", 		$time, s14, SRAM_WE, 0);
 						//if(COND_RSLT != ) $display("ERROR @ time %d in state %d: COND_RSLT is %b, but should be %b.", 	$time, s14, COND_RSLT, 0);
 						if(WB_MUX != 2'b10) 	$display("ERROR @ time %d in state %d: WB_MUX is %b, but should be %b.", 	$time, s14, WB_MUX, 2'b10);
 						if(rDst != r4) 		$display("ERROR @ time %d in state %d: rDst is %b, but should be %b.", 			$time, s14, rDst, r4);

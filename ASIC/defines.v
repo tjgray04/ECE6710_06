@@ -97,6 +97,7 @@
 	`define SCOND 	4'b1101
 	`define JCOND 	4'b1100
 	`define JAL 	4'b1000
+	`define RLOAD	4'b1111
 
 //////////////////////////
 // ALU Op codes
@@ -178,3 +179,15 @@
 `define LOAD1		7
 `define STORE		8
 `define SCOND0		9
+
+//////////////////////////
+// MMIO Peripherial Addresses
+`define CTRLR0		16'hFFF0
+`define CTRLR1		16'hFFF1
+`define CTRLR2		16'hFFF2
+`define CTRLR3		16'hFFF3
+`define AUDIOREG0	16'hFFF4
+`define AUDIOREG1	16'hFFF5
+`define AUDIOREG2	16'hFFF6
+`define AUDIOREG3	16'hFFF7
+`define TIMER0		16'hFFF8

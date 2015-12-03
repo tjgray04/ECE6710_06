@@ -34,6 +34,11 @@ module cpu_tb;
 	reg [15:0] glyph_addr; // address from glyph
 
 	// Outputs
+	wire SRAM_CE; // Chip enable for SRAM
+	wire SRAM_OE; // Output enable for SRAM
+	wire SRAM_WE; // Write enable for SRAM
+	wire ROM_CE; // Chip enable for ROM
+	wire ROM_OE; // Output enable for ROM
 	wire [15:0] alu_result; // result from alu
 	wire [15:0] memc_din0; // data from dSrc for jumps and data SRAM
 	wire [15:0] rom_addr; // instruction address 
@@ -83,6 +88,11 @@ module cpu_tb;
 		.sram_dout(sram_dout), 
 		.rom_dout(rom_dout), 
 		.glyph_addr(glyph_addr), 
+		.SRAM_CE(SRAM_CE),
+		.SRAM_OE(SRAM_OE),
+		.SRAM_WE(SRAM_WE),
+		.ROM_CE(ROM_CE),
+		.ROM_OE(ROM_OE),
 		.alu_result(alu_result), 
 		.memc_din0(memc_din0), 
 		.rom_addr(rom_addr), 
@@ -221,6 +231,7 @@ module cpu_tb;
 				s14: // STOR R4, R1
 					begin
 						#10;
+						if(SRAM_WE != 0) 				$display("ERROR @ time %d in state %d: SRAM_WE is %h, but should be %h.", 	$time, s14, SRAM_WE, 0);
 //						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s14, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s14, memc_din0, 16'd0);
 						if(rom_addr != 16'he) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s14, rom_addr, 16'he);

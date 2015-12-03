@@ -31,10 +31,12 @@ module reg_alu_tb;
 	reg write;
 	reg IMM_MUX;
 	reg COND_RSLT;
+	reg WB_MUX0;
 	reg [1:0] WB_MUX;
 	reg [3:0] rSrc;
 	reg [3:0] rDst;
 	reg [4:0] aluOp;
+	reg [15:0] drom;
 	reg [15:0] pc_ra;
 	reg [7:0] imm_in;
 	reg [15:0] mem_data;
@@ -78,10 +80,12 @@ module reg_alu_tb;
 		.write(write), 
 		.IMM_MUX(IMM_MUX), 
 		.COND_RSLT(COND_RSLT),
+		.WB_MUX0(WB_MUX0),
 		.WB_MUX(WB_MUX),
 		.rSrc(rSrc), 
 		.rDst(rDst), 
-		.aluOp(aluOp), 
+		.aluOp(aluOp),
+		.drom(drom),
 		.pc_ra(pc_ra), 
 		.imm_in(imm_in), 
 		.mem_data(mem_data), 
@@ -98,10 +102,12 @@ module reg_alu_tb;
 		write = 0;
 		IMM_MUX = 0;
 		COND_RSLT = 0;
+		WB_MUX0 = 0;
 		WB_MUX = 0;
 		rSrc = 0;
 		rDst = 0;
 		aluOp = 0;
+		drom = 0;
 		pc_ra = 0;
 		imm_in = 0;
 		mem_data = 0;
@@ -267,10 +273,12 @@ module reg_alu_tb;
 		write = 1'b0; 		// 1-bit
 		IMM_MUX = 1'b0; 	// 1-bit
 		COND_RSLT = 1'b0;	// 1-bit
+		WB_MUX0 = 1'b0;
 		WB_MUX = 2'b10;		// 2-bit	
 		rSrc = 4'b0; 		// 4-bit
 		rDst = 4'b0; 		// 4-bit
 		aluOp = 5'b0; 		// 5-bit
+		drom = 16'b0;
 		pc_ra = 16'b0; 		// 16-bit
 		imm_in = 8'b0; 		// 16-bit
 		mem_data = 16'b0; // 16-bit

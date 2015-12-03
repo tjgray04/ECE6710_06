@@ -22,31 +22,46 @@
 `include "defines.v"
 
 module controller
-	(input clk, rst,
-	 input [`PRSWIDTH-1:0] psr_in,
-	 input [`DATAWIDTH-1:0] inst,
-	 output reg BRANCH, 
-	 output reg JUMP, 
-	 output reg ROM_MUX, 
-	 output reg MEMC_MUX, 
-	 //output reg ALU_BUF, 
-	 output reg IMM_MUX,
+	(input clk, rst, 								// clock and reset
+	 input [`PRSWIDTH-1:0] psr_in,			// program status register from ALU
+	 input [`DATAWIDTH-1:0] instruction,	// instruction
+	 output reg BRANCH, 							// branch control
+	 output reg JUMP, 							// jump control
+	 output reg ROM_MUX, 						// mux that controls address input to ROM chip
+	 output reg MEMC_MUX, 						// mux that controls address input to memory controller
+	 //output reg ALU_BUF, 				
+	 output reg IMM_MUX,							// mux that controls the immediate argument for ALU
 //	 output reg PSR_EN,
-	 output reg PC_EN,
-	 output reg WRITE,
-	 output reg COND_RSLT,
-	 output reg [1:0] WB_MUX, 
-	 output reg [`REGWIDTH-1:0] rDst,
-	 output reg [`REGWIDTH-1:0] rSrc,
-	 output reg [`IMMWIDTH-1:0] imm_val, 
-	 output reg [`ALUOPWIDTH-1:0] ALU_OP);
+	 output reg PC_EN,							// program counter enable
+	 output reg WRITE,							// register file write enable
+	 output reg SRAM_CE,							// SRAM chip enable
+	 output reg SRAM_OE,							// SRAM output enable
+	 output reg SRAM_WE,							// SRAM write enable
+	 output reg ROM_CE,							// ROM chip enable
+	 output reg ROM_OE,							// ROM output enable
+	 output reg COND_RSLT,						// result of conditional instructions
+	 output reg WB_MUX0,							// mux that controlls otuput of WB_MUX and ROM data
+	 output reg [1:0] WB_MUX, 					// mux that controls what gets written back to the regfile
+	 output reg [`REGWIDTH-1:0] rDst,		// Destination register encoding
+	 output reg [`REGWIDTH-1:0] rSrc,		// Source register encoding
+	 output reg [`IMMWIDTH-1:0] imm_val, 	// Immediate value
+	 output reg [`ALUOPWIDTH-1:0] ALU_OP);	// ALU op code
 
 	// FSM states
 	reg [4:0] ps, ns;
 	
 	// Internal registers/control signals
-	reg PSR_EN;
+	reg PSR_EN, INST_EN;
 	reg [`PRSWIDTH-1:0] psr;
+	reg [`DATAWIDTH-1:0] inst;
+	
+	// Latch the instruction when enabled
+	always@(posedge clk) begin
+		if(INST_EN)
+			inst <= instruction;
+		else
+			inst <= inst;
+	end
 	
 	// Latch PSR only when enabled
 	always@(posedge clk) begin
@@ -111,11 +126,12 @@ module controller
 							begin
 								//inst[7:4]
 								case(inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH])
-									`LOAD:  ns = `LOAD0;
+									`LOAD:  ns = `FETCH; //`LOAD0;
 									`STOR:  ns = `FETCH;
 									`SCOND: ns = `FETCH;
 									`JCOND: ns = `FETCH;
 									`JAL:   ns = `FETCH;
+									`RLOAD: ns = `FETCH;
 									default: ns = `FETCH;
 								endcase
 							end // end oType
@@ -150,7 +166,7 @@ module controller
 //			`BRANCH:  ns = `FETCH;			
 //			`JUMP: 	 ns = `FETCH;		
 //			`JMPAL: 	 ns = `FETCH;		
-			`LOAD0: 	 ns = `FETCH;			
+//			`LOAD0: 	 ns = `FETCH;			
 //			`LOAD1: 	 ns = `FETCH;			
 //			`STORE: 	 ns = `FETCH;
 			default:  ns = `FETCH;
@@ -164,20 +180,29 @@ module controller
 		ROM_MUX = 0;
 		MEMC_MUX = 0;
 		WB_MUX = 2'b10;
+		WB_MUX0 = 0;
 		//ALU_BUF = 0;
 		IMM_MUX = 0;
 		PSR_EN = 0;
 		PC_EN = 0;
+		INST_EN = 0;
 		WRITE = 0;
+		SRAM_CE = 1; // Active low signal
+		SRAM_OE = 1; // Active low signal
+		SRAM_WE = 1; // Active low signal
+		ROM_CE = 1;  // Active low signal
+		ROM_OE = 1;  // Active low signal
 		COND_RSLT = 0;
 		rDst = `REGWIDTH'b0;
 		rSrc = `REGWIDTH'b0;
 		imm_val = `IMMWIDTH'b0;
 		ALU_OP = `ALUOPWIDTH'b0;
 		case(ps)
-			`FETCH:
+			`FETCH: // Enable reading from ROM
 				begin
-					;
+					ROM_CE = 0;
+					ROM_OE = 0;
+					INST_EN = 1;
 				end
 			`DECODE:
 				begin
@@ -366,17 +391,26 @@ module controller
 							begin
 								//inst[7:4]
 								case(inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH])
-									`LOAD: 
+									`LOAD: // From SRAM
 										begin
+											rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
 											rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
 											MEMC_MUX = 1;
+											WRITE = 1;
+											WB_MUX = 2'b11;
+											PC_EN = 1;
+											SRAM_CE = 0;
+											SRAM_OE = 0;
 										end
-									`STOR: 
+									`STOR: // To SRAM
 										begin
 											rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
 											rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
 											MEMC_MUX = 1;
 											PC_EN = 1;
+											SRAM_CE = 0;
+											SRAM_OE = 0;
+											SRAM_WE = 0;
 										end
 									`SCOND: 
 										begin
@@ -435,6 +469,17 @@ module controller
 											rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
 											WRITE = 1;
 											WB_MUX = 2'b0;
+											PC_EN = 1;
+										end
+									`RLOAD:
+										begin
+											ROM_CE = 0;
+											ROM_OE = 0;
+											rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
+											rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
+											MEMC_MUX = 1;
+											WRITE = 1;
+											WB_MUX0 = 1;
 											PC_EN = 1;
 										end
 									default: ;
@@ -544,15 +589,17 @@ module controller
 //				begin
 //					PC_EN = 1;
 //				end
-			`LOAD0:
-				begin
-					rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
-					rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
-					MEMC_MUX = 1;
-					WRITE = 1;
-					WB_MUX = 2'b11;
-					PC_EN = 1;
-				end
+//			`LOAD0:
+//				begin
+//					rDst = inst[`DATAWIDTH-`OPWIDTH-1:`DATAWIDTH-`OPWIDTH-`REGWIDTH];
+//					rSrc = inst[`DATAWIDTH-`OPWIDTH-`REGWIDTH-`OPEXWIDTH-1:0];
+//					MEMC_MUX = 1;
+//					WRITE = 1;
+//					WB_MUX = 2'b11;
+//					PC_EN = 1;
+//					SRAM_CE = 0;
+//					SRAM_OE = 0;
+//				end
 //			`LOAD1:
 //				begin
 //					;

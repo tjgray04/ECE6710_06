@@ -33,7 +33,7 @@ module sram
 	 output reg [15:0] dout);	// Output data
 	 	
 		// Two dimensional rom arrray
-   reg [15:0] sram [(2**16)-1:0]; 
+   reg [15:0] sram [(2**10)-1:0]; 
 	
 	// Counter
 	reg [1:0] wcount, rcount;
