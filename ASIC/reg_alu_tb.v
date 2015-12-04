@@ -44,7 +44,6 @@ module reg_alu_tb;
 	// Outputs
 	wire [15:0] dSrc;
 	wire [15:0] dDst;
-	wire [15:0] alu_Result;
 	wire [4:0]  psrOut;
 
 	// Reset 
@@ -91,7 +90,6 @@ module reg_alu_tb;
 		.mem_data(mem_data), 
 		.dSrc(dSrc), 
 		.dDst(dDst), 
-		.alu_Result(alu_Result),
 		.psrOut(psrOut)
 	);
 

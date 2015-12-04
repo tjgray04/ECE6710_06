@@ -66,7 +66,7 @@ module mem_ctrl
 	
 	// Determine which address is being written to, and route 
 	// signals 
-	always@(addrin_cpu) begin
+	always@(*) begin
 		CE = 1;
 		OE = 1;
 		WE = 1;
@@ -82,51 +82,51 @@ module mem_ctrl
 			12'hFFF: // Peripherial space
 				begin
 					case(addrin_cpu[3:0])
-						`CTRLR0:
+						`STATE_CTRLR0:
 							begin
 								addr_ctrlr = 2'b00;
 								ctrlr_re = ~SRAM_OE & SRAM_WE;
 								dmem_out = din_ctrlrs;
 							end
-						`CTRLR1:
+						`STATE_CTRLR1:
 							begin
 								addr_ctrlr = 2'b01;
 								ctrlr_re = ~SRAM_OE & SRAM_WE;
 								dmem_out = din_ctrlrs;
 							end
-						`CTRLR2:
+						`STATE_CTRLR2:
 							begin
 								addr_ctrlr = 2'b10;
 								ctrlr_re = ~SRAM_OE & SRAM_WE;
 								dmem_out = din_ctrlrs;
 							end
-						`CTRLR3:
+						`STATE_CTRLR3:
 							begin
 								addr_ctrlr = 2'b11;
 								ctrlr_re = ~SRAM_OE & SRAM_WE;
 								dmem_out = din_ctrlrs;
 							end
-						`AUDIOREG0:
+						`STATE_AUDIOREG0:
 							begin
 								addr_audio = 2'b00;
-								audio_we = ~SRAM_WE;
+								audio_we = ~SRAM_OE;
 							end
-						`AUDIOREG1:
+						`STATE_AUDIOREG1:
 							begin
 								addr_audio = 2'b01;
-								audio_we = ~SRAM_WE;
+								audio_we = ~SRAM_OE;
 							end
-						`AUDIOREG2:
+						`STATE_AUDIOREG2:
 							begin
 								addr_audio = 2'b10;
-								audio_we = ~SRAM_WE;
+								audio_we = ~SRAM_OE;
 							end
-						`AUDIOREG3:
+						`STATE_AUDIOREG3:
 							begin
 								addr_audio = 2'b11;
-								audio_we = ~SRAM_WE;
+								audio_we = ~SRAM_OE;
 							end
-						`TIMER0:
+						`STATE_TIMER0:
 							begin
 								timer_re = ~SRAM_OE & SRAM_WE;
 								dmem_out = din_timer;

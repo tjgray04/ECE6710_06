@@ -39,7 +39,6 @@ module cpu_tb;
 	wire SRAM_WE; // Write enable for SRAM
 	wire ROM_CE; // Chip enable for ROM
 	wire ROM_OE; // Output enable for ROM
-	wire [15:0] alu_result; // result from alu
 	wire [15:0] memc_din0; // data from dSrc for jumps and data SRAM
 	wire [15:0] rom_addr; // instruction address 
 	wire [15:0] mem_addr; // address for SRAM
@@ -93,7 +92,6 @@ module cpu_tb;
 		.SRAM_WE(SRAM_WE),
 		.ROM_CE(ROM_CE),
 		.ROM_OE(ROM_OE),
-		.alu_result(alu_result), 
 		.memc_din0(memc_din0), 
 		.rom_addr(rom_addr), 
 		.mem_addr(mem_addr)
@@ -119,7 +117,6 @@ module cpu_tb;
 				s0: // MOV R1, R0
 					begin
 						#5;
-						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.", 	$time, s0, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", 	$time, s0, memc_din0, 16'd0);
 						if(rom_addr != 16'h0) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s0, rom_addr, 16'h0);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s0, mem_addr, glyph_addr);
@@ -127,7 +124,6 @@ module cpu_tb;
 				s1: // MOV R2, R0
 					begin
 						#10;
-						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s1, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s1, memc_din0, 16'd0);
 						if(rom_addr != 16'h1) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s1, rom_addr, 16'h1);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s1, mem_addr, glyph_addr);
@@ -135,7 +131,6 @@ module cpu_tb;
 				s2: // ADDI R1, 64
 					begin
 						#10;
-						if(alu_result != 16'd64) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s2, alu_result, 16'd64);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s2, memc_din0, 16'd0);
 						if(rom_addr != 16'h2) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s2, rom_addr, 16'h2);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s2, mem_addr, glyph_addr);
@@ -143,7 +138,6 @@ module cpu_tb;
 				s3: // ADDI R2, 14
 					begin
 						#10;
-						if(alu_result != 16'd14) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s3, alu_result, 16'd14);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s3, memc_din0, 16'd0);
 						if(rom_addr != 16'h3) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s3, rom_addr, 16'h3);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s3, mem_addr, glyph_addr);
@@ -151,7 +145,6 @@ module cpu_tb;
 				s4: // MOV R3, R0
 					begin
 						#10;
-						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s4, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s4, memc_din0, 16'd0);
 						if(rom_addr != 16'h4) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s4, rom_addr, 16'h4);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s4, mem_addr, glyph_addr);
@@ -159,7 +152,6 @@ module cpu_tb;
 				s5: // MOV R4, R0
 					begin
 						#10;
-						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s5, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s5, memc_din0, 16'd0);
 						if(rom_addr != 16'h5) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s5, rom_addr, 16'h5);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s5, mem_addr, glyph_addr);
@@ -167,7 +159,6 @@ module cpu_tb;
 				s6: // ADDI R3, 1
 					begin
 						#10;
-						if(alu_result != 16'd1) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s6, alu_result, 16'd1);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s6, memc_din0, 16'd0);
 						if(rom_addr != 16'h6) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s6, rom_addr, 16'h6);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s6, mem_addr, glyph_addr);
@@ -175,7 +166,6 @@ module cpu_tb;
 				s7: // ADDI R4, -1
 					begin
 						#10;
-						if(alu_result != 16'hffff) $display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.", $time, s7, alu_result, 16'hffff);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s7, memc_din0, 16'd0);
 						if(rom_addr != 16'h7) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s7, rom_addr, 16'h7);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s7, mem_addr, glyph_addr);
@@ -183,7 +173,6 @@ module cpu_tb;
 				s8: // LOOP: CMP  R2, R0
 					begin
 						#10
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s8, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s8, memc_din0, 16'd0);
 						if(rom_addr != 16'h8) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s8, rom_addr, 16'h8);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s8, mem_addr, glyph_addr);
@@ -191,7 +180,6 @@ module cpu_tb;
 				s9: // BEQ, END
 					begin
 						#10
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s9, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s9, memc_din0, 16'd0);
 //						if(rom_addr != 16'h9) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s9, rom_addr, 16'h9);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s9, mem_addr, glyph_addr);
@@ -199,7 +187,6 @@ module cpu_tb;
 				s10: // ADD R3, R4
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s10, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s10, memc_din0, 16'd0);
 						if(rom_addr != 16'ha) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s10, rom_addr, 16'ha);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s10, mem_addr, glyph_addr);
@@ -207,7 +194,6 @@ module cpu_tb;
 				s11: // MOV R5, R3
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s11, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s11, memc_din0, 16'd0);
 						if(rom_addr != 16'hb) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s11, rom_addr, 16'hb);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s11, mem_addr, glyph_addr);
@@ -215,7 +201,6 @@ module cpu_tb;
 				s12: // MOV R3, R4
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s12, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s12, memc_din0, 16'd0);
 						if(rom_addr != 16'hc) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s12, rom_addr, 16'hc);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s12, mem_addr, glyph_addr);
@@ -223,7 +208,6 @@ module cpu_tb;
 				s13: // MOV R4, R5
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s13, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s13, memc_din0, 16'd0);
 						if(rom_addr != 16'hd) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s13, rom_addr, 16'hd);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s13, mem_addr, glyph_addr);
@@ -232,7 +216,6 @@ module cpu_tb;
 					begin
 						#10;
 						if(SRAM_WE != 0) 				$display("ERROR @ time %d in state %d: SRAM_WE is %h, but should be %h.", 	$time, s14, SRAM_WE, 0);
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s14, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s14, memc_din0, 16'd0);
 						if(rom_addr != 16'he) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s14, rom_addr, 16'he);
 //						if(mem_addr != 16'd) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s14, mem_addr, glyph_addr);
@@ -240,7 +223,6 @@ module cpu_tb;
 				s15: // ADDI R1, 1
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s15, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s15, memc_din0, 16'd0);
 						if(rom_addr != 16'hf) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s15, rom_addr, 16'hf);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s15, mem_addr, glyph_addr);
@@ -248,7 +230,6 @@ module cpu_tb;
 				s16: // ADDI R2, -1
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s16, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s16, memc_din0, 16'd0);
 						if(rom_addr != 16'h10) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s16, rom_addr, 16'h10);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s16, mem_addr, glyph_addr);
@@ -256,7 +237,6 @@ module cpu_tb;
 				s17: // MOV R6, R0	
 					begin
 						#10;
-						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s17, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s17, memc_din0, 16'd0);
 						if(rom_addr != 16'h11) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s17, rom_addr, 16'h11);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s17, mem_addr, glyph_addr);
@@ -264,7 +244,6 @@ module cpu_tb;
 				s18: // ADDI R6, 8
 					begin
 						#10;
-						if(alu_result != 16'd8) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s18, alu_result, 16'd8);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s18, memc_din0, 16'd0);
 						if(rom_addr != 16'h12) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s18, rom_addr, 16'h12);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s18, mem_addr, glyph_addr);
@@ -272,7 +251,6 @@ module cpu_tb;
 				s19: // JUC LOOP
 					begin
 						#10;
-//						if(alu_result != 16'd0) 	$display("ERROR @ time %d in state %d: alu_result is %h, but should be %h.",$time, s19, alu_result, 16'd0);
 //						if(memc_din0 != 16'd0) 		$display("ERROR @ time %d in state %d: memc_din0 is %h, but should be %h.", $time, s19, memc_din0, 16'd0);
 						if(rom_addr != 16'h13) 		$display("ERROR @ time %d in state %d: rom_addr is %h, but should be %h.", 	$time, s19, rom_addr, 16'h13);
 						if(mem_addr != glyph_addr) $display("ERROR @ time %d in state %d: mem_addr is %h, but should be %h.", 	$time, s19, mem_addr, glyph_addr);

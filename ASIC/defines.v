@@ -191,3 +191,15 @@
 `define AUDIOREG2	16'hFFF6
 `define AUDIOREG3	16'hFFF7
 `define TIMER0		16'hFFF8
+
+//////////////////////////
+// MMIO Peripherial State Encoding
+`define STATE_CTRLR0		4'h0
+`define STATE_CTRLR1		4'h1
+`define STATE_CTRLR2		4'h2
+`define STATE_CTRLR3		4'h3
+`define STATE_AUDIOREG0	4'h4
+`define STATE_AUDIOREG1	4'h5
+`define STATE_AUDIOREG2	4'h6
+`define STATE_AUDIOREG3	4'h7
+`define STATE_TIMER0		4'h8

@@ -35,6 +35,8 @@ module pc
 			pc <= 0;
 		else if(pcEn)
 			pc <= pc_next;
+      else
+         pc <= pc;
 	end
 
 	// Sign extend the displacement if branching => 8-bit branch [-127,127]

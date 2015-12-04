@@ -19,9 +19,9 @@ module reg_alu
 	  input  [`IMMWIDTH-1:0] 	imm_in,			// immediate value
 	  input  [`DATAWIDTH-1:0] 	mem_data, 		// data from memory
 	  output [`DATAWIDTH-1:0] 	dSrc, dDst,		// src and dst register data
-	  output [`DATAWIDTH-1:0] 	alu_Result,		// result from the alu
 	  output [`PRSWIDTH-1:0] 	psrOut);			// program status register
 
+   wire [`DATAWIDTH-1:0] alu_Result; 			// result from alu
 	wire [`DATAWIDTH-1:0] imm_ex; 				// sign extended immediate value
 	wire [`DATAWIDTH-1:0] alu_rSrc; 				// value from IMM_MUX
 	wire [`DATAWIDTH-1:0] wb_mux0; 				// input to reg file data in port

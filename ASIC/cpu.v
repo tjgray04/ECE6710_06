@@ -32,7 +32,6 @@ module cpu
 	 output SRAM_WE,								// Write enable for SRAM chip
 	 output ROM_CE,								// Chip enable for ROM chip
 	 output ROM_OE,								// Output enable for ROM chip
-	 output [`DATAWIDTH-1:0] alu_result, 	// result of ALU
 	 output [`DATAWIDTH-1:0] memc_din0,  	// Data to memory controller from cpu
 	 output [`DATAWIDTH-1:0] rom_addr, 		// Address for ROM
 	 output [`DATAWIDTH-1:0] mem_addr); 	// Address to memory (mem controller and ROM) from cpu
@@ -58,7 +57,7 @@ module cpu
 	
 	reg_alu Execute (.clk(clk), .write(write), .IMM_MUX(imm_mux), .COND_RSLT(cond_rslt), .WB_MUX0(WB_MUX0), .WB_MUX(wb_mux), 
 						  .rSrc(rSrc), .rDst(rDst), .aluOp(alu_op), .drom(rom_dout), .pc_ra(pc_ra), .imm_in(imm), .mem_data(sram_dout),
-						  .alu_Result(alu_result), .dSrc(dSrc), .dDst(dDst), .psrOut(psr));
+						  .dSrc(dSrc), .dDst(dDst), .psrOut(psr));
 	
 	// ROM Address mux
 	assign rom_addr = (rom_mux) ? mem_addr : pc;
