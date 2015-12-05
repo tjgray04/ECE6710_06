@@ -50,7 +50,7 @@ module SnesInterface
 );
 
    // FSM States
-	parameter RESET    = 3'd0;
+   parameter RESET    = 3'd0;
    parameter IDLE     = 3'd1;
    parameter LATCH    = 3'd2;
    parameter WAIT1    = 3'd3;
