@@ -75,7 +75,8 @@ module sys_top
 	// 2. VGA Controller
 	// 3. Audio Controller
 	// 4. Serial ROM?
-	// 5. Controller Logic
+	// 5. SNES Controller Logic
    // 6. Timmer
+   // 7. Arbiter
 	
 endmodule

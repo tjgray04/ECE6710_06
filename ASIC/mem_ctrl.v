@@ -50,7 +50,7 @@ module mem_ctrl
 	// Highest partition, address 0xFFF0 = 65,520, is reserved form peripherials
 	// all other partions belong to SRAM space
 	// Within the peripherial space addresses are assigned as follows:
-	// 	CTRLR0		16'hFFF0
+	// 	CTRLR0		16'hFFF0FF0
 	//		CTRLR1		16'hFFF1
 	//		CTRLR2		16'hFFF2
 	//		CTRLR3		16'hFFF3
@@ -78,8 +78,9 @@ module mem_ctrl
 		dsram = 0;
 		addr_sram = 0;
 		dmem_out = 0;
+      
 		case(addrin_cpu[15:4])
-			12'hFFF: // Peripherial space
+			12'hFDF: // Peripherial space
 				begin
 					case(addrin_cpu[3:0])
 						`STATE_CTRLR0:

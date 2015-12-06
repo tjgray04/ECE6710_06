@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/Users/Steve Brown/Utah/Fall 2015/ECE 6710/Team Project/GIT/ASIC/vga_ctrl_tb_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="vga_ctrl_tb" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="16" />
+   <wvobject fp_name="/vga_ctrl_tb/clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/rst" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">rst</obj_property>
+      <obj_property name="ObjectShortName">rst</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/h_sync" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">h_sync</obj_property>
+      <obj_property name="ObjectShortName">h_sync</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/v_sync" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">v_sync</obj_property>
+      <obj_property name="ObjectShortName">v_sync</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/bright" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">bright</obj_property>
+      <obj_property name="ObjectShortName">bright</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/rgb" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rgb[7:0]</obj_property>
+      <obj_property name="ObjectShortName">rgb[7:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/glyph_addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">glyph_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">glyph_addr[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/acnt" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">acnt[2:0]</obj_property>
+      <obj_property name="ObjectShortName">acnt[2:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/glyph_num" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">glyph_num[15:0]</obj_property>
+      <obj_property name="ObjectShortName">glyph_num[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/glyph_pixels" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">glyph_pixels[15:0]</obj_property>
+      <obj_property name="ObjectShortName">glyph_pixels[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/TimeGen/h_ticks" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">h_ticks[8:0]</obj_property>
+      <obj_property name="ObjectShortName">h_ticks[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/h_pixel" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">h_pixel[8:0]</obj_property>
+      <obj_property name="ObjectShortName">h_pixel[8:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/TimeGen/v_ticks" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">v_ticks[9:0]</obj_property>
+      <obj_property name="ObjectShortName">v_ticks[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/v_pixel" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">v_pixel[7:0]</obj_property>
+      <obj_property name="ObjectShortName">v_pixel[7:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/sram_addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">sram_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">sram_addr[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/vga_ctrl_tb/uut/rom_addr" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">rom_addr[15:0]</obj_property>
+      <obj_property name="ObjectShortName">rom_addr[15:0]</obj_property>
+      <obj_property name="Radix">HEXRADIX</obj_property>
+   </wvobject>
+</wave_config>

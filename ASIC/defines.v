@@ -12,6 +12,9 @@
 `define ALUOPWIDTH	5
 `define REGWIDTH		4
 `define IMMWIDTH		8
+// Memory data
+`define ROM_ADDR_BITS   16
+`define SRAM_ADDR_BITS  16
 
 //////////////////////////
 // Conditional Types
@@ -128,35 +131,29 @@
 `define DP_JCOND	10'b0_0_0_0_0_01
 `define DP_JAL		10'b1_0_0_0_0_00
 
-// VGA 800x600 60Hz
+// VGA 256x256 60Hz w/12.5MHz clk
 // h* is in clocks
-// `define hdisplay 	800
-// `define hfrontporch 840		// +40
-// `define hpulse		968		// +128
-// `define hbackporch 	1056	// +88
-`define hdisplay 	640
-`define hfrontporch 656		// +16
-`define hpulse		752		// +96
-`define hbackporch 	800 	// +48
+`define hdisp  320
+`define hfp    8
+`define hpw    48
+`define hbp    24
+`define hMAX   400
 // v* is in lines (relative to h)
-// `define vdisplay 	600
-// `define vfrontporch 601		// +1
-// `define vpulse 		605		// +4
-// `define vbackporch 	628		// +23
-`define vdisplay 	480
-`define vfrontporch 490		// +10
-`define vpulse 		492		// +2
-`define vbackporch 	525		// +33
+`define vdisp  480
+`define vfp    10
+`define vpw    2
+`define vbp    29
+`define vMAX   521
 
 // VGA timing generator
-`define HLINES 	640
-`define VLINES 	480
-`define HMAX 	800
-`define VMAX 	525
-`define HFP 	656
-`define HSP 	752
-`define VFP 	490
-`define VSP 	492
+//`define HLINES 	640
+//`define VLINES 	480
+//`define HMAX 	   800
+//`define VMAX 	   525
+//`define HFP 	   656
+//`define HSP 	   752
+//`define VFP 	   490
+//`define VSP 	   492
 
 // `define HLINES 800
 // `define VLINES 600
@@ -182,15 +179,15 @@
 
 //////////////////////////
 // MMIO Peripherial Addresses
-`define CTRLR0		16'hFFF0
-`define CTRLR1		16'hFFF1
-`define CTRLR2		16'hFFF2
-`define CTRLR3		16'hFFF3
-`define AUDIOREG0	16'hFFF4
-`define AUDIOREG1	16'hFFF5
-`define AUDIOREG2	16'hFFF6
-`define AUDIOREG3	16'hFFF7
-`define TIMER0		16'hFFF8
+`define CTRLR0		16'hFB40
+`define CTRLR1		16'hFB41
+`define CTRLR2		16'hFB42
+`define CTRLR3		16'hFB43
+`define AUDIOREG0	16'hFB44
+`define AUDIOREG1	16'hFB45
+`define AUDIOREG2	16'hFB46
+`define AUDIOREG3	16'hFB47
+`define TIMER0		16'hFB48
 
 //////////////////////////
 // MMIO Peripherial State Encoding
@@ -203,3 +200,7 @@
 `define STATE_AUDIOREG2	4'h6
 `define STATE_AUDIOREG3	4'h7
 `define STATE_TIMER0		4'h8
+
+//////////////////////////
+// Frame Buffer Base Address
+`define FRAMEBUF  16'hFB50
