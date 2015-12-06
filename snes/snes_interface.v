@@ -1,53 +1,52 @@
 `timescale 1ns / 1ps
 
-module SnesRegister
+module SnesInterface
 (
-   input             sys_clk,
+   input             sys_clk,       // 12.5MHz Clock
    input             sys_reset,
-   input             latch_data,
-   input      [11:0] snes_buttons,
-   output reg [ 3:0] button_num
+   input      [1:0]  address,
+   input             read_enable,   // Reads the latched data for the controller specified by the read address
+   output reg [11:0] read_data,     // The button data for the specified controller
+   input      [3:0]  snes_data,     // Data returned from the SNES controller shift registers
+   output reg        snes_latch,    // Pulse sent to the SNES controller to latch the state of the buttons
+   output reg        snes_pulse     // Pulses sent to shift out the button values from the SNES controller
 );
 
+   // count used for dividing the 12.5MHz system clock
+   reg [1:0] count;
+
+   // count used for the 1ms sampling cooldown
+   reg [13:0] cooldown_count;
+
+   // keep track of how many button values have been shifted in
+   reg [3:0] button_count;
+
+   // goes high for 1 cycle after the button values have been shifted in
+   // used to latch the shifted data
+   reg data_valid;
+
+   wire [11:0] read_values_0;
+   wire [11:0] read_values_1;
+   wire [11:0] read_values_2;
+   wire [11:0] read_values_3;
+
+   // put the selected controller's button values on the output
    always@(posedge sys_clk) begin
       if (sys_reset) begin
-         button_num <= 4'd0;
+         read_data <= 12'd0;
       end
-      else if (latch_data) begin
-         casex (snes_buttons)
-            12'b1xxxxxxxxxxx : button_num <= 4'd6;  // B
-            12'b01xxxxxxxxxx : button_num <= 4'd8;  // Y
-            12'b001xxxxxxxxx : button_num <= 4'd11; // select
-            12'b0001xxxxxxxx : button_num <= 4'd12; // start 
-            12'b00001xxxxxxx : button_num <= 4'd1;  // up
-            12'b000001xxxxxx : button_num <= 4'd2;  // down
-            12'b0000001xxxxx : button_num <= 4'd3;  // left
-            12'b00000001xxxx : button_num <= 4'd4;  // right
-            12'b000000001xxx : button_num <= 4'd5;  // A
-            12'b0000000001xx : button_num <= 4'd7;  // X
-            12'b00000000001x : button_num <= 4'd9;  // L
-            12'b000000000001 : button_num <= 4'd10; // R
-            default          : button_num <= 4'd0;            
+      else if (read_enable) begin
+         case (address)
+            0 : read_data <= read_values_0;
+            1 : read_data <= read_values_1;
+            2 : read_data <= read_values_2;
+            3 : read_data <= read_values_3;
          endcase
       end
       else begin
-         button_num <= button_num;
+         read_data <= read_data;
       end
    end
-
-endmodule
-
-module SnesInterface
-(
-   input             sys_clk,       // 16MHz Clock
-   input             sys_reset,
-   input             read_enable,   // Triggers a read from the SNES controller
-   input             snes_data,     // Data from the SNES controller shift registers
-   output reg        snes_latch,    // Pulse sent to the SNES controller to latch the state of the buttons
-   output reg        snes_pulse,    // Pulses sent to shift out the button values from the SNES controller
-   output reg [11:0] snes_buttons,  // Button states read from the SNES controller
-   output reg        read_complete
-);
 
    // FSM States
    parameter RESET    = 3'd0;
@@ -56,25 +55,22 @@ module SnesInterface
    parameter WAIT1    = 3'd3;
    parameter SHIFT_HI = 3'd4;
    parameter SHIFT_LO = 3'd5;
-   
-   reg [2:0] state;   
-   
-   // count used for dividing the 16MHz system clock
-   reg [1:0] count;   
-   
-   // keep track of how many buttons have been shifted in
-   reg [3:0] button_count;
-   
+   parameter COOLDOWN = 3'd6;
+
    // FSM
+   reg [2:0] state;
    always@(posedge sys_clk) begin
-      snes_latch    <= 1'b0;
-      snes_pulse    <= 1'b0;
-      count         <= 2'd0;
-      button_count  <= button_count;
-      read_complete <= 1'b0;
+      snes_latch     <= 1'b0;
+      snes_pulse     <= 1'b0;
+      count          <= 2'd0;
+      button_count   <= button_count;
+      data_valid     <= 1'b0;
+      cooldown_count <= 14'd0;
       if (sys_reset) begin
-         state        <= RESET;
-         button_count <= 1'b0;
+         state          <= RESET;
+         count          <= 2'd0;
+         button_count   <= 1'b0;
+         cooldown_count <= 14'd0;
       end
       else begin
          case (state)
@@ -91,7 +87,7 @@ module SnesInterface
                   state <= IDLE;
                end
             end
-            // hold the latch high for ~250ns
+            // hold the latch signal high for more than 200ns
             LATCH : begin
                if (count < 2'd3) begin
                   state      <= LATCH;
@@ -103,7 +99,7 @@ module SnesInterface
                   count <= 2'd0;
                end
             end
-            // wait for 1/2 period of the snes_pulse clock (62.5ns)
+            // wait for 1/2 period of the snes_pulse clock
             WAIT1 : begin
                if (count < 2'd1) begin
                   state <= WAIT1;
@@ -141,32 +137,116 @@ module SnesInterface
                      button_count <= button_count + 1'd1;
                   end
                   else begin
-                     state         <= IDLE;
-                     button_count  <= 4'd0;
-                     read_complete <= 1'b1;
+                     state          <= COOLDOWN;
+                     cooldown_count <= 14'd12500;
+                     button_count   <= 4'd0;
+                     data_valid     <= 1'b1;
                   end
+               end
+            end
+            // wait 1ms before sampling the controllers again
+            COOLDOWN : begin
+               if (cooldown_count == 14'b0) begin
+                  state <= IDLE;
+               end
+               else begin
+                  state          <= COOLDOWN;
+                  cooldown_count <= cooldown_count - 1'b1;
                end
             end
             default  : begin
                state <= IDLE;
             end
          endcase
-      end   
-   end   
-   
-   wire   data_latch;
-   assign data_latch = snes_latch | snes_pulse;
-   
-   // latch the button data on the falling edge of the latch and pulse signals
-   always @(negedge data_latch) begin      
-      snes_buttons <= snes_buttons;
-      case (state)
-         LATCH    : snes_buttons <= { snes_buttons[10:0], ~snes_data };
-         WAIT1    : snes_buttons <= { snes_buttons[10:0], ~snes_data };
-         SHIFT_HI : snes_buttons <= { snes_buttons[10:0], ~snes_data };
-         SHIFT_LO : snes_buttons <= { snes_buttons[10:0], ~snes_data };
-         default  : snes_buttons <= snes_buttons;
-      endcase
+      end
    end
 
+   // registers to hold the data shifted in from each controller
+   reg [11:0] buttons_0;
+   reg [11:0] buttons_1;
+   reg [11:0] buttons_2;
+   reg [11:0] buttons_3;
+
+   wire   data_latch;
+   assign data_latch = snes_latch | snes_pulse;
+
+   // latch the button data on the falling edge of the latch and pulse signals
+   always @(negedge data_latch) begin
+      if (state == LATCH | state == WAIT1 | state == SHIFT_HI | state == SHIFT_LO) begin
+         buttons_0 <= { buttons_0[10:0], ~snes_data[0] };
+         buttons_1 <= { buttons_1[10:0], ~snes_data[1] };
+         buttons_2 <= { buttons_2[10:0], ~snes_data[2] };
+         buttons_3 <= { buttons_3[10:0], ~snes_data[3] };
+      end
+      else begin
+         buttons_0 <= buttons_0;
+         buttons_1 <= buttons_1;
+         buttons_2 <= buttons_2;
+         buttons_3 <= buttons_3;
+      end
+   end
+
+   /////////////////////////////
+   // Register Instantiations //
+   /////////////////////////////
+
+   SnesRegister snes_reg_0
+   (
+      .sys_clk(sys_clk),
+      .sys_reset(sys_reset),
+      .latch_data(data_valid),
+      .snes_buttons(buttons_0),
+      .button_values(read_values_0)
+   );
+
+   SnesRegister snes_reg_1
+   (
+      .sys_clk(sys_clk),
+      .sys_reset(sys_reset),
+      .latch_data(data_valid),
+      .snes_buttons(buttons_1),
+      .button_values(read_values_1)
+   );
+
+   SnesRegister snes_reg_2
+   (
+      .sys_clk(sys_clk),
+      .sys_reset(sys_reset),
+      .latch_data(data_valid),
+      .snes_buttons(buttons_2),
+      .button_values(read_values_2)
+   );
+
+   SnesRegister snes_reg_3
+   (
+      .sys_clk(sys_clk),
+      .sys_reset(sys_reset),
+      .latch_data(data_valid),
+      .snes_buttons(buttons_3),
+      .button_values(read_values_3)
+   );
+
 endmodule // SnesInterface
+
+module SnesRegister
+(
+   input             sys_clk,
+   input             sys_reset,
+   input             latch_data,
+   input      [11:0] snes_buttons,
+   output reg [11:0] button_values
+);
+
+   always@(posedge sys_clk) begin
+      if (sys_reset) begin
+         button_values <= 12'd0;
+      end
+      else if (latch_data) begin
+         button_values <= snes_buttons;
+      end
+      else begin
+         button_values <= button_values;
+      end
+   end
+
+endmodule
