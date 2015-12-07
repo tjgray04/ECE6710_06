@@ -51,7 +51,7 @@ module ROM_TEST_BENCH;
 		PCadr = 18'b0;
 
 		// Wait 100 ns for global reset to finish
-		#10;
+		#5;
        i = 0;
 		// Add stimulus here
 		for(i = 0; i < 16 ; i = i+1)
