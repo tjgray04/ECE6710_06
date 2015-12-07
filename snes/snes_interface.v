@@ -18,6 +18,10 @@ module SnesInterface
    // keep track of how many button values have been shifted in
    reg [3:0] button_count;
 
+   // registers to hold the data shifted in from each controller
+   reg [11:0] buttons_0;
+   reg [11:0] buttons_1;
+
    // put the selected controller's button values on the output
    always@(posedge sys_clk) begin
       if (sys_reset) begin
@@ -131,10 +135,6 @@ module SnesInterface
          endcase
       end
    end
-
-   // registers to hold the data shifted in from each controller
-   reg [11:0] buttons_0;
-   reg [11:0] buttons_1;
 
    wire   data_latch;
    assign data_latch = snes_latch | snes_pulse;
