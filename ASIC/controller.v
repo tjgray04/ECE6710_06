@@ -25,6 +25,7 @@ module controller
 	(input clk, rst, 								// clock and reset
 	 input [`PRSWIDTH-1:0] psr_in,			// program status register from ALU
 	 input [`DATAWIDTH-1:0] instruction,	// instruction
+    input [2:0] acnt,                     // Arbiter Count
 	 output reg BRANCH, 							// branch control
 	 output reg JUMP, 							// jump control
 	 output reg ROM_MUX, 						// mux that controls address input to ROM chip
@@ -76,7 +77,14 @@ module controller
 		if(!rst)
 			ps <= `FETCH;
 		else
-			ps <= ns;
+         // The arbiter is an 8-bit counter to synchronize VGA and
+         // CPU memory accesses. The CPU is scheduled to operate only
+         // on cycles 2 - 8, and VGA is scheduled on cycles 0 & 1.
+         case(acnt) 
+            3'd0: ps <= ps;
+            3'd1: ps <= ps;
+            default: ps <= ns;
+         endcase
 	end
 	
 	// Next State

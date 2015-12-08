@@ -36,7 +36,8 @@ module vga_ctrl
    always@(*) begin
       case(acnt)
          3'd0: glyph_addr = sram_addr;
-         default: glyph_addr = rom_addr;
+         3'd1: glyph_addr = rom_addr;
+         default: glyph_addr = glyph_addr;
       endcase
    end
 
