@@ -40,12 +40,13 @@ module sys_top
 	wire [`DATAWIDTH-1:0] dsram;        // Data from memory controller as data_in for SRAM
 	wire [`DATAWIDTH-1:0] addr_sram;    // Address from memcory controller to addr for SRAM
 	wire [1:0] addr_ctrlr;              // Address from mem controller to controller logic
-	wire [1:0] addr_audio;              // Address from mem controller to audio logic
+	wire [1:0] addr_audio;              // Address from mem controller to audio logic   
+	wire [`REGWIDTH-1:0] rDst, rSrc;    // Destination and Source register encodings
+   wire [`DATAWIDTH-1:0] dDst, dSrc;   // Destination and Source register data
+	wire [`DATAWIDTH-1:0] wb_data;      // Data to be written back to register file
    
-
    
-//	wire [`DATAWIDTH-1:0] sram_dout;
-//	wire [`DATAWIDTH-1:0] sram_dout;
+   
 //	wire [`DATAWIDTH-1:0] sram_dout;
 	
 	//////////////////////////
@@ -53,9 +54,9 @@ module sys_top
    
    // TODO: memc_din0 should be renamed to din_cpu
    // TODO: GET RID OF alu_result
-	cpu CPU(.clk(clk), .rst(rst), .sram_dout(dmem_out), .rom_dout(rom_dout), .glyph_addr(16'd0),
+	cpu CPU(.clk(clk), .rst(rst), .sram_dout(dmem_out), .rom_dout(rom_dout), .glyph_addr(16'd0), .dDst(dDst), .dSrc(dSrc),
 			  .SRAM_CE(SRAM_CE), .SRAM_OE(SRAM_OE), .SRAM_WE(SRAM_WE), .ROM_CE(ROM_CE), .ROM_OE(ROM_OE), 
-			  .memc_din0(din_cpu), .rom_addr(rom_addr), .mem_addr(mem_addr));
+			  .write(write), .acnt(acnt), .rDst(rDst), .rSrc(rSrc), .wb_data(wb_data), .memc_din0(din_cpu), .rom_addr(rom_addr), .mem_addr(mem_addr));
 	
 	// Note: hard-coded values will be tied to Vdd/Gnd on PCB breakout board. 
 	sram SRAM(.clk(clk), .CE(CE), .OE(OE), .WE(WE), .LB(1'b0), .UB(1'b0), .addr(addr_sram), .din(dsram), .dout(sram_dout));
@@ -63,11 +64,8 @@ module sys_top
 	// Note: hard-coded values will be tied to Vdd/Gnd on PCB breakout board. 
 	rom ROM(.clk(clk), .CE(ROM_CE), .OE(ROM_OE), .addr(rom_addr), .dout(rom_dout));
 	
-   // Note: ...
-   mem_ctrl MEM_CTRL(.SRAM_CE(SRAM_CE), .SRAM_OE(SRAM_OE), .SRAM_WE(SRAM_WE), .din_cpu(din_cpu), 
-   .din_ctrlrs(16'd0), .din_timer(16'd0), .addrin_cpu(mem_addr), .din_sram(sram_dout), .CE(CE), 
-   .OE(OE), .WE(WE), .ctrlr_re(ctrlr_re), .audio_we(audio_we), .timer_re(timer_re), 
-   .addr_ctrlr(addr_ctrlr), .addr_audio(addr_audio), .dsram(dsram), .addr_sram(addr_sram), .dmem_out(dmem_out));
+   // Models register file outside of CPU (as with our ASIC)
+   regfile RegFile(.clk(clk), .write(write), .rSrc(rSrc), .rDst(rDst), .write_data(wb_data), .dSrc(dSrc), .dDst(dDst));
    
 	//////////////////////////////
 	// Things left to instantiate
