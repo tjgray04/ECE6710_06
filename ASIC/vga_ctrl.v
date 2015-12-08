@@ -33,7 +33,7 @@ module vga_ctrl
    vga_bitgen Bitgen(.bright(bright), .pixel_data(glyph_pixels), .h_pixel(h_pixel[2:0]), .rgb(rgb));
 
    // Assign memory address depending on current clock cycle
-   always@(*) begin
+   always@(posedge clk) begin
       case(acnt)
          3'd0: glyph_addr = sram_addr;
          3'd1: glyph_addr = rom_addr;
