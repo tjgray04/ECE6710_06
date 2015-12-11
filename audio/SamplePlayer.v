@@ -1,17 +1,18 @@
 `timescale 1ns / 1ps
 
 module SamplePlayer(
-   input  clk,
-   input  reset,
-   input  trig_0,
-   output i2s_mclk,
-   output i2s_lrclk,
-   output i2s_sclk,
-   output i2s_sdata,
-   input  spi_miso,
-   output spi_mosi,
-   output spi_clk,
-   output spi_ce_n
+   input        clk,
+   input        reset,
+   input        read_enable,
+   input  [1:0] read_addr,
+   output       i2s_mclk,
+   output       i2s_lrclk,
+   output       i2s_sclk,
+   output       i2s_sdata,
+   input        spi_miso,
+   output       spi_mosi,
+   output       spi_clk,
+   output       spi_ce_n
 );
    
    wire        spi_start_read;
@@ -19,6 +20,12 @@ module SamplePlayer(
    wire  [7:0] spi_data;
    wire [23:0] spi_addr;
    wire [10:0] sample_data;
+   
+   // internal trigger signals
+   wire trig_0 = read_enable & (read_addr == 2'd0);
+   wire trig_1 = read_enable & (read_addr == 2'd1);;
+   wire trig_2 = read_enable & (read_addr == 2'd2);;
+   wire trig_3 = read_enable & (read_addr == 2'd3);;
    
    assign i2s_mclk = clk;
    
@@ -48,10 +55,13 @@ module SamplePlayer(
    (
       .clk(clk),
       .reset(reset),
-      .trigger(trig_0),
+      .trigger_0(trig_0),
+      .trigger_1(trig_1),
+      .trigger_2(trig_2),
+      .trigger_3(trig_3),
       .lrclk(i2s_lrclk),
       .spi_data(spi_data),
-      .spi_data_ready(spi_data_ready),
+      .spi_ce_n(spi_ce_n),
       .spi_addr(spi_addr),
       .start_read(spi_start_read),
       .sample_data(sample_data)
