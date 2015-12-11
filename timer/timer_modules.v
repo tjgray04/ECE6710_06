@@ -10,6 +10,9 @@ module Timer_100us
 
    // 1250 cycles is 100us @ 12.5MHz
    localparam TICKCOUNT = 1249;
+   
+   // system reset is active low
+   wire inv_reset = ~reset;
 
    // increments every 100us, wraparound behavior
    reg [15:0] count = 0;

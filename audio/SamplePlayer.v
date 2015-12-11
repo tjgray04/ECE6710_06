@@ -29,6 +29,9 @@ module SamplePlayer(
    
    assign i2s_mclk = clk;
    
+   // system reset is active low
+   wire inv_reset = ~reset;
+   
    ClockGenerator clkgen_0
    (
       .clk_in(clk),
