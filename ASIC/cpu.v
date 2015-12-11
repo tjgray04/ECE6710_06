@@ -28,6 +28,7 @@ module cpu
     input [`DATAWIDTH-1:0] glyph_addr,       // Address for accessing glyph in ROM
     input [`DATAWIDTH-1:0] dDst,             // Destination register data
     input [`DATAWIDTH-1:0] dSrc,             // Source register data
+    output ps,                               // Present Sate bit
     output CE,                               // Chip enable for SRAM chip
     output OE,                               // Output enable for SRAM chip
     output WE,                               // Write enable for SRAM chip
@@ -40,6 +41,7 @@ module cpu
     output [1:0] addr_ctrlr,                 // Address for SNES controller
     output [1:0] addr_audio,                 // Address for Audio register
     output [2:0] acnt,                       // Arbiter count
+    output [`PRSWIDTH-1:0] psr,               // Program Status Register
     output [`REGWIDTH-1:0] rDst, rSrc,       // Registers in regfile  
     output [`DATAWIDTH-1:0] wb_data,         // Data to be written back to register file
     output [`DATAWIDTH-1:0] memc_din0,       // Data to memory controller from cpu
@@ -48,7 +50,7 @@ module cpu
     output [`DATAWIDTH-1:0] dmem);           // Output data from memory controller
 
    // Internal Buses
-   wire [`PRSWIDTH-1:0] psr;              // Program Status Register
+   // wire [`PRSWIDTH-1:0] psr;              // Program Status Register
    wire [1:0] wb_mux;                     // Mux that controls what is written back to regfile   
    wire [`IMMWIDTH-1:0] imm;              // Immediate value
    wire [`ALUOPWIDTH-1:0] alu_op;         // ALU operation code
@@ -62,7 +64,7 @@ module cpu
    // Module instances
    
    // Logic Controller
-   controller LogicCtrl (.clk(clk), .rst(rst), .psr_in(psr), .instruction(dmem), .acnt(acnt), .BRANCH(branch), .JUMP(jump),
+   controller LogicCtrl (.clk(clk), .rst(rst), .psr_in(psr), .instruction(dmem), .acnt(acnt), .ps(ps), .BRANCH(branch), .JUMP(jump),
                          .ROM_MUX(rom_mux), .MEMC_MUX(memc_mux), .IMM_MUX(imm_mux), .PC_EN(pc_en), .WRITE(write),
                          .SRAM_CE(SRAM_CE), .SRAM_OE(SRAM_OE), .SRAM_WE(SRAM_WE), .ROM_CE(ROM_CE), .ROM_OE(ROM_OE),       
                          .COND_RSLT(cond_rslt), .WB_MUX0(WB_MUX0), .WB_MUX(wb_mux), .rDst(rDst), .rSrc(rSrc),

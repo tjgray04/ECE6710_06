@@ -26,6 +26,7 @@ module controller
 	 input [`PRSWIDTH-1:0] psr_in,			// program status register from ALU
 	 input [`DATAWIDTH-1:0] instruction,	// instruction
     input [2:0] acnt,                     // Arbiter Count
+    output reg ps,                        // Present State bit
 	 output reg BRANCH, 							// branch control
 	 output reg JUMP, 							// jump control
 	 output reg ROM_MUX, 						// mux that controls address input to ROM chip
@@ -49,7 +50,8 @@ module controller
 	 output reg [`ALUOPWIDTH-1:0] ALU_OP);	// ALU op code
 
 	// FSM states
-	reg [4:0] ps, ns;
+	//reg ps;
+   reg ns;
 	
 	// Internal registers/control signals
 	reg PSR_EN, INST_EN;
