@@ -1,0 +1,16 @@
+/* -------------- *
+ * Design : TIEHI *
+ * -------------- */
+cell (TIEHI) {
+  cell_footprint : tiehi;
+  area : 129.6;
+  cell_leakage_power : 0;
+  rail_connection( GND, RAIL_GND );
+  rail_connection( VDD, RAIL_VDD );
+  pin(Y)  {
+    direction : output;
+    output_signal_level : RAIL_VDD;
+    max_transition : 0;
+    function : "1";
+  }
+}
