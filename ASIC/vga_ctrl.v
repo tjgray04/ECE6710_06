@@ -136,7 +136,7 @@ module vga_bitgen
          3'd5: rgb = (bright) ? pixel_data[11:10] : 2'b0;
          3'd6: rgb = (bright) ? pixel_data[13:12] : 2'b0;
          3'd7: rgb = (bright) ? pixel_data[15:14] : 2'b0;
-         default: temp_rgb = 2'b0;
+         default: rgb = 2'b0;
       endcase
    end
    
