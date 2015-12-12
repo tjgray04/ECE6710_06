@@ -133,17 +133,17 @@
 
 // VGA 256x256 60Hz w/12.5MHz clk
 // h* is in clocks
-`define hdisp  320
-`define hfp    8
-`define hpw    48
-`define hbp    24
-`define hMAX   400
+`define hdisp  9'd320
+`define hfp    4'd8
+`define hpw    6'd48
+`define hbp    5'd24
+`define hMAX   9'd400
 // v* is in lines (relative to h)
-`define vdisp  480
-`define vfp    10
-`define vpw    2
-`define vbp    29
-`define vMAX   521
+`define vdisp  9'd480
+`define vfp    4'd10
+`define vpw    3'd2
+`define vbp    5'd29
+`define vMAX   10'd521
 
 // VGA timing generator
 //`define HLINES 	640
