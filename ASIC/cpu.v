@@ -44,7 +44,7 @@ module cpu
     output [`PRSWIDTH-1:0] psr,              // Program Status Register
     output [`REGWIDTH-1:0] rDst, rSrc,       // Registers in regfile  
     output [`DATAWIDTH-1:0] wb_data,         // Data to be written back to register file
-    output [`DATAWIDTH-1:0] memc_din0,       // Data to memory controller from cpu
+    //output [`DATAWIDTH-1:0] memc_din0,       // Data to memory controller from cpu
     output [`DATAWIDTH-1:0] DOUT_SRAM,       // Output data to the SRAM
     output [`DATAWIDTH-1:0] EXT_MEM_ADDR,    // Address for external memory
     output [`DATAWIDTH-1:0] dmem);           // Output data from memory controller
@@ -94,7 +94,7 @@ module cpu
    assign mem_addr = (memc_mux) ? dSrc : glyph_addr;
    
    // Assign the din0 for memory controller
-   assign memc_din0 = dDst;
+   // assign memc_din0 = dDst;
    
 endmodule
 
