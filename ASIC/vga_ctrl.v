@@ -8,7 +8,7 @@ module vga_ctrl
     input  [`DATAWIDTH-1:0] glyph_num,       // glyph number from frame buffer in SRAM
     input  [`DATAWIDTH-1:0] glyph_pixels,    // glyph pixel information from ROM
     output h_sync, v_sync,                   // VGA sync pulse signals 
-    output [7:0] rgb,                        // 8-bit RGB value
+    output [1:0] rgb,                        // 8-bit RGB value
     output reg [`DATAWIDTH-1:0] glyph_addr); // frame buffer/glyph library address
 
    wire [8:0] h_pixel;
@@ -122,25 +122,25 @@ module vga_bitgen
    (input  bright,
     input [`DATAWIDTH-1:0] pixel_data,
     input [2:0] h_pixel,
-    output reg [7:0] rgb);
+    output reg [1:0] rgb);
    
-   reg[7:0] temp_rgb;
+   //reg[7:0] temp_rgb;
    
    always@(*) begin
       case(h_pixel)
-         3'd0: temp_rgb = (bright) ? pixel_data[1:0] : 2'b0;
-         3'd1: temp_rgb = (bright) ? pixel_data[3:2] : 2'b0;
-         3'd2: temp_rgb = (bright) ? pixel_data[5:4] : 2'b0; 
-         3'd3: temp_rgb = (bright) ? pixel_data[7:6] : 2'b0;
-         3'd4: temp_rgb = (bright) ? pixel_data[9:8] : 2'b0;
-         3'd5: temp_rgb = (bright) ? pixel_data[11:10] : 2'b0;
-         3'd6: temp_rgb = (bright) ? pixel_data[13:12] : 2'b0;
-         3'd7: temp_rgb = (bright) ? pixel_data[15:14] : 2'b0;
+         3'd0: rgb = (bright) ? pixel_data[1:0] : 2'b0;
+         3'd1: rgb = (bright) ? pixel_data[3:2] : 2'b0;
+         3'd2: rgb = (bright) ? pixel_data[5:4] : 2'b0; 
+         3'd3: rgb = (bright) ? pixel_data[7:6] : 2'b0;
+         3'd4: rgb = (bright) ? pixel_data[9:8] : 2'b0;
+         3'd5: rgb = (bright) ? pixel_data[11:10] : 2'b0;
+         3'd6: rgb = (bright) ? pixel_data[13:12] : 2'b0;
+         3'd7: rgb = (bright) ? pixel_data[15:14] : 2'b0;
          default: temp_rgb = 2'b0;
       endcase
    end
    
-   always@(*) begin
+   /*always@(*) begin
       case(temp_rgb)
          2'd0: rgb = 8'b111_000_00; // RED
          2'd1: rgb = 8'b000_111_00; // GREEN
@@ -149,5 +149,6 @@ module vga_bitgen
          default: rgb = 8'b000_000_00; // BLACK -- should never get here
       endcase
    end
+  */
   
 endmodule
