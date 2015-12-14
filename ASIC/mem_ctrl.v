@@ -28,7 +28,7 @@ module mem_ctrl
     input ROM_CE,								         // Chip enable for ROM
 	 input ROM_OE,								         // Output enable for ROM
 	 input [`DATAWIDTH-1:0] din_cpu,			      // Data in from the CPU
-	 input [`DATAWIDTH-1:0] din_ctrlrs,		      // Data in from the controllers
+	 input [11:0] din_ctrlrs,		      // Data in from the controllers
 	 input [`DATAWIDTH-1:0] din_timer,		      // Data in from the timer
 	 input [`DATAWIDTH-1:0] addrin_cpu,		      // Address in from the CPU
 	 input [`DATAWIDTH-1:0] EXT_MEM_DATA,	      // Data in from the SRAM
@@ -76,7 +76,7 @@ module mem_ctrl
 		addr_audio = 0;
 		DOUT_SRAM = 0;
 		EXT_MEM_ADDR = 0;
-		dmem = 0;
+		dmem = 16'd0;
 
       // ROM access is in progress
       if(~ROM_OE & ~ROM_CE) begin
@@ -95,25 +95,25 @@ module mem_ctrl
                         begin
                            addr_ctrlr = 2'b00;
                            ctrlr_re = ~SRAM_OE & SRAM_WE;
-                           dmem = din_ctrlrs;
+                           dmem[11:0] = din_ctrlrs;
                         end
                      `STATE_CTRLR1:
                         begin
                            addr_ctrlr = 2'b01;
                            ctrlr_re = ~SRAM_OE & SRAM_WE;
-                           dmem = din_ctrlrs;
+                           dmem[11:0] = din_ctrlrs;
                         end
                      `STATE_CTRLR2:
                         begin
                            addr_ctrlr = 2'b10;
                            ctrlr_re = ~SRAM_OE & SRAM_WE;
-                           dmem = din_ctrlrs;
+                           dmem[11:0] = din_ctrlrs;
                         end
                      `STATE_CTRLR3:
                         begin
                            addr_ctrlr = 2'b11;
                            ctrlr_re = ~SRAM_OE & SRAM_WE;
-                           dmem = din_ctrlrs;
+                           dmem[11:0] = din_ctrlrs;
                         end
                      `STATE_AUDIOREG0:
                         begin

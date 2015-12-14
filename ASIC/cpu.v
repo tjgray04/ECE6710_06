@@ -28,7 +28,7 @@ module cpu
     input [`DATAWIDTH-1:0] glyph_addr,       // Address for accessing glyph in ROM
     input [`DATAWIDTH-1:0] dDst,             // Destination register data
     input [`DATAWIDTH-1:0] dSrc,             // Source register data
-    input [`DATAWIDTH-1:0] din_ctrlrs,       // Data in from SNES Controllers
+    input [11:0] din_ctrlrs,       // Data in from SNES Controllers
     input [`DATAWIDTH-1:0] din_timer,        // Data in from Timmer
     output ps,                               // Present Sate bit
     output CE,                               // Chip enable for SRAM chip
