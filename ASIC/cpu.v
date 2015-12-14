@@ -82,7 +82,7 @@ module cpu
    
    // Memory Controller
    mem_ctrl MEM_CTRL(.SRAM_CE(SRAM_CE), .SRAM_OE(SRAM_OE), .SRAM_WE(SRAM_WE), .ROM_CE(ROM_CE), .ROM_OE(ROM_OE), .din_cpu(dDst), 
-                     .din_ctrlrs(16'd0), .din_timer(16'd0), .addrin_cpu(mem_addr), .EXT_MEM_DATA(EXT_MEM_DATA), .rom_addr(rom_addr), .CE(CE), 
+                     .din_ctrlrs(din_ctrlrs), .din_timer(din_timer), .addrin_cpu(mem_addr), .EXT_MEM_DATA(EXT_MEM_DATA), .rom_addr(rom_addr), .CE(CE), 
                      .OE(OE), .WE(WE), .ctrlr_re(ctrlr_re), .audio_we(audio_we), .timer_re(timer_re), 
                      .addr_ctrlr(addr_ctrlr), .addr_audio(addr_audio), .DOUT_SRAM(DOUT_SRAM), .EXT_MEM_ADDR(EXT_MEM_ADDR), .dmem(dmem));
    
