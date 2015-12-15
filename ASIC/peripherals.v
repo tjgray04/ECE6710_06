@@ -34,7 +34,7 @@ module peripherals
 
    Timer_100us Timmer(.clk(clk), .reset(rst), .read(read), .count_out(count_out));
    
-   SnesInterface SNES(.sys_clk(clk), .sys_reset(rst), .address(address), .read_enable(read_enable), .read_data(read_data), .snes_data(),.snes_latch(snes_latch), .snes_pulse(snes_pulse));
+   SnesInterface SNES(.sys_clk(clk), .sys_reset(rst), .address(address), .read_enable(read_enable), .read_data(read_data), .snes_data(snes_data),.snes_latch(snes_latch), .snes_pulse(snes_pulse));
 
 endmodule
 
